@@ -34,7 +34,7 @@ def read_file_json(filename):
   df = conn.read(filename, input_format="json", ttl=600)
   return df
 
-with open('./style.css') as f:
+with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     
 sig_list = ['서울특별시', '부산광역시', '대구광역시', '인천광역시', '광주광역시', '대전광역시', '울산광역시',
@@ -81,4 +81,7 @@ df_rent = df_rent[df_rent['시도명'] == sig_area]
 # st.text(df_trade[['사용승인일','건축년도']])
 # st.text(df_rent[['사용승인일','건축년도']])
 
-st.text
+st.title("부동산 대시보드")
+
+st.text(df_trade)
+st.text(df_rent)
