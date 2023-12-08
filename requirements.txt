@@ -5,3 +5,4 @@ streamlit
 geopandas
 st_files_connection
 plotly
+s3fs 
