@@ -3,3 +3,6 @@ pytz
 boto3
 streamlit
 geopandas
+st_files_connection
+plotly
+PIL
