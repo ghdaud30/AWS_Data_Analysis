@@ -4,9 +4,12 @@ AWS를 이용한 공공 데이터 분석 입니다
 ## 실행 환경
    - 서버
       - AWS EC2
-      - Ubuntu Linux 20.04.06 LTS
+      - Ubuntu Linux 22.04 LTS
+      - Anaconda 2023.07
    - 대시보드
       - Python Streamlit
+      
+## Streamlit 클라우드로 배포
 
 ## 데이터 출처
 1. [전국 공원(공공데이터)](https://www.data.go.kr/iim/api/selectAcountList.do)
