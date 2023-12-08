@@ -5,4 +5,3 @@ streamlit
 geopandas
 st_files_connection
 plotly
-PIL
