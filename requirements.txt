@@ -4,5 +4,8 @@ boto3
 streamlit
 geopandas
 st_files_connection
+matplotlib
+seaborn
+folium
 plotly
 s3fs 
