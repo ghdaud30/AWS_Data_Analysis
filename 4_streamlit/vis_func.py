@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import geopandas as gpd
 import glob
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import seaborn as sns
 import mplcursors
 import plotly.express as px
