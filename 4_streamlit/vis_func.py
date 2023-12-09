@@ -229,7 +229,7 @@ def school_count_type(school, sig_area, school_name):
     plt.tight_layout()
     plt.show()
     
-    return school4
+    return fig
 
 def school_count_plotly(df_trade, sig_area,school_name):
   
@@ -330,7 +330,7 @@ def school_count_gender(school, sig_area, school_name):
     plt.tight_layout()
     plt.show()
     
-    return school4
+    return fig
 
 def trade_mean_month(total, sig_area, type_val):
     
