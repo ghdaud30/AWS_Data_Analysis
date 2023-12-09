@@ -57,11 +57,11 @@ sig_area = st.sidebar.selectbox(
 )
 
 st.title('AWS 서버를 활용한 부동산 거래 정보') 
-st.subheader(f'{sig_area} 오피스텔 거래 정보(2021년)')
+st.subheader(f'{sig_area} 공원 및 학교 정보')
 st.markdown("---")
 
 elementary_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/elementary_school.csv')
-middle_shcool = read_file_csv('real-estate555-bucket/0_data/streamlit_data/middle_shcool.csv')
+middle_shcool = read_file_csv('real-estate555-bucket/0_data/streamlit_data/middle_school.csv')
 high_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/high_school.csv')
 
 elementary_school['시도명'] = elementary_school['도로명주소'].str.split(' ').str[0]
