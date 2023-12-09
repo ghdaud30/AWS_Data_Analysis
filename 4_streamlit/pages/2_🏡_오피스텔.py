@@ -54,7 +54,7 @@ sig_list = ['서울특별시', '부산광역시', '대구광역시', '인천광�
        '세종특별자치시', '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도', '경상북도',
        '경상남도', '제주특별자치도']
 
-option = st.sidebar.selectbox(
+sig_area = st.sidebar.selectbox(
     "시군구 선택",
     sig_list
 )
@@ -71,13 +71,15 @@ month_option = st.sidebar.selectbox(
  month_list
 )
 
-sig_area = option
+st.title('AWS 서버를 활용한 부동산 거래 정보') 
+st.subheader(f'{sig_area} 오피스텔 거래 정보(2021년)')
+st.markdown("---")
 
 # trade_count_df = read_file_csv('apart-bucket/0_data/streamlit_data/trade_count.csv')
-vis_trade_rent_df = read_file_csv('apart-bucket/0_data/streamlit_data/vis_trade_rent.csv')
+vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 # apart_trans4 = read_file_csv('apart-bucket/0_data/streamlit_data/map_csv.csv')
 # sig_lat_lon = read_file_csv('apart-bucket/0_data/streamlit_data/sig_lat_lon.csv')
-geo_json = read_file_json(f'apart-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
+geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
 
 
 

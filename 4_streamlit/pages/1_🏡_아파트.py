@@ -71,12 +71,16 @@ month_option = st.sidebar.selectbox(
  month_list
 )
 
+st.title('AWS 서버를 활용한 부동산 거래 정보') 
+st.subheader(f'{sig_area} 아파트 거래 정보(2021년)')
+st.markdown("---")
+
 # trade_count_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/trade_count.csv')
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 # apart_trans4 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/map_csv.csv')
 # sig_lat_lon = read_file_csv('real-estate555-bucketreal-estate555-bucket/0_data/streamlit_data/sig_lat_lon.csv')
 
-geo_json_seoul = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
+geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
 
 
 vis_trade_rent1 = vis_func.vis_trade_rent(vis_trade_rent_df,

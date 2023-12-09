@@ -47,9 +47,22 @@ def read_image_s3(filename):
 # with open('4_streamlit/style.css') as f:
 #     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-elementary_school = read_file_csv('apart-bucket/0_data/streamlit_data/elementary_school.csv')
-middle_shcool = read_file_csv('apart-bucket/0_data/streamlit_data/middle_shcool.csv')
-high_school = read_file_csv('apart-bucket/0_data/streamlit_data/high_school.csv')
+sig_list = ['서울특별시', '부산광역시', '대구광역시', '인천광역시', '광주광역시', '대전광역시', '울산광역시',
+       '세종특별자치시', '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도', '경상북도',
+       '경상남도', '제주특별자치도']
+
+sig_area = st.sidebar.selectbox(
+    "시군구 선택",
+    sig_list
+)
+
+st.title('AWS 서버를 활용한 부동산 거래 정보') 
+st.subheader(f'{sig_area} 오피스텔 거래 정보(2021년)')
+st.markdown("---")
+
+elementary_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/elementary_school.csv')
+middle_shcool = read_file_csv('real-estate555-bucket/0_data/streamlit_data/middle_shcool.csv')
+high_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/high_school.csv')
 
 elementary_school['시도명'] = elementary_school['도로명주소'].str.split(' ').str[0]
 elementary_school['시군구명'] = elementary_school['도로명주소'].str.split(' ').str[1]
