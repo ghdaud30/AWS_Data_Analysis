@@ -8,4 +8,5 @@ matplotlib
 seaborn
 folium
 plotly
-s3fs 
+s3fs
+mplcursors
