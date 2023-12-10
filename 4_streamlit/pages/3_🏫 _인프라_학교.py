@@ -17,7 +17,7 @@ from PIL import Image
 
 st.set_page_config(
     page_title="인프라",
-    page_icon="🏡",
+    page_icon="🏫",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -71,7 +71,7 @@ middle_shcool['시군구명'] = middle_shcool['도로명주소'].str.split(' ').
 high_school['시도명'] = high_school['도로명주소'].str.split(' ').str[0]
 high_school['시군구명'] = high_school['도로명주소'].str.split(' ').str[1]
 
-school_vis1 = vis_func.school_count_type(elementary_school, sig_area,'초등학교')
+school_vis = vis_func.school_count_type(elementary_school, sig_area,'초등학교')
 school_vis2 = vis_func.school_count_type(middle_shcool, sig_area,'중학교')
 school_vis3 = vis_func.school_count_type(high_school, sig_area,'고등학교')
 
@@ -83,24 +83,25 @@ school_vis7 = vis_func.school_count_gender(elementary_school, sig_area,'초등�
 school_vis8 = vis_func.school_count_gender(middle_shcool, sig_area,'중학교')
 school_vis9 = vis_func.school_count_gender(high_school, sig_area,'고등학교')
 
-school = ['school_vis1','school_vis2','school_vis3','school_vis4','school_vis5'
+school = ['school_vis','school_vis2','school_vis3','school_vis4','school_vis5'
           ,'school_vis6','school_vis7','school_vis8','school_vis9']
 
 # 표시 행
 columns = len(school) // 3
 
-n = 1
+n = 0
 
-for i in range(1, len(school) + 1, columns):
+for i in range(0, len(school), columns):
     col = st.columns([1,1,1])
     
     for j in range(len(col)):
-      n += 1
-      if(i == 4):
-        col[j].plotly_chart(f'school_vis{n}', use_container_width = True)
+      if(i == 3):
+        col[j].plotly_chart(school[i + j], use_container_width = True)
+        n += 1
         continue
       else:
-        col[j].pyplot(f'school_vis{n}', use_container_width = True)
+        col[j].pyplot(school[i + j], use_container_width = True)
+        n += 1
     
 # col1, col2, col3 = st.columns([1,1,1])
 # col1.pyplot(school_vis1, use_container_width = True) 
