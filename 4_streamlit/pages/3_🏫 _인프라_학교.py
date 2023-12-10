@@ -4,6 +4,7 @@ import geopandas as gpd
 import glob
 import plotly.express as px
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 import folium
 import json
 import math
@@ -14,6 +15,8 @@ from datetime import datetime
 
 from st_files_connection import FilesConnection
 from PIL import Image
+
+import matplotlib.font_manager as fm  # 한글 폰트
 
 st.set_page_config(
     page_title="인프라",
