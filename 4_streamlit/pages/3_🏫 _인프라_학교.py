@@ -22,6 +22,16 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# 현재 디렉토리 경로
+current_directory = os.path.dirname(__file__)
+
+# 나눔고딕 폰트 경로 설정
+font_path = os.path.join(current_directory, 'customFonts', 'NanumGothic-Regular.ttf')
+
+# 폰트 추가 및 적용
+fm.fontManager.addfont(font_path)
+plt.rc('font', family='NanumGothic')
+
 conn = st.connection('s3', type=FilesConnection)
 
 @st.cache_data(ttl=3600)
@@ -59,6 +69,17 @@ sig_area = st.sidebar.selectbox(
 st.title('AWS 서버를 활용한 부동산 거래 정보') 
 st.subheader(f'{sig_area} 학교 정보')
 st.markdown("---")
+
+st.sidebar.markdown(
+    """
+    # Reference
+    - [데이터 분석으로 배우는 파이썬 문제 해결](https://www.aladin.co.kr/m/mproduct.aspx?ItemId=327566110)
+    - [공공데이터](https://www.data.go.kr/)
+    - [학교(나이스)](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010104913&infSeq=2)
+    - [지역별 인구(kosis 공유서비스)](https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B040A3&vw_cd=MT_ZTITLE&list_id=A_7&scrId=&seqNo=&lang_mode=ko&obj_var_id=&itm_id=&conn_path=MT_ZTITLE&path=%252FstatisticsList%252FstatisticsListIndex.do)
+    - [지리 정보 수집(지오서비스)](http://www.gisdeveloper.co.kr/?p=2332)
+"""
+)
 
 elementary_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/elementary_school.csv')
 middle_shcool = read_file_csv('real-estate555-bucket/0_data/streamlit_data/middle_school.csv')
@@ -119,10 +140,3 @@ for i in range(0, len(school), columns):
 # col9.pyplot(school_vis9, use_container_width = True)
 
 
-
-st.sidebar.markdown(
-    """
-    # Reference
-    - [데이터 분석으로 배우는 파이썬 문제 해결](https://www.aladin.co.kr/m/mproduct.aspx?ItemId=327566110)
-"""
-)

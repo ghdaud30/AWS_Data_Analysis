@@ -15,9 +15,6 @@ from datetime import datetime
 from st_files_connection import FilesConnection
 from PIL import Image
 
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm  # 한글 폰트
-
 # 웹 페이지의 기본 설정
 st.set_page_config(
     page_title="홍예준 PortfFolio",
@@ -25,30 +22,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# 한글 폰트 적용
-@st.cache_data(ttl=3600)
-def fontRegistered():
-    font_dirs = 'customFonts'
-    font_files = fm.findSystemFonts(fontpaths=font_dirs)
-
-    for font_file in font_files:
-        fm.fontManager.addfont(font_file)
-    fm._load_fontmanager(try_read_cache=False)
-    
-fontRegistered()
-fontNames = [f.name for f in fm.fontManager.ttflist]
-    
-if 'NanumGothic' in fontNames:  # '나눔고딕' 폰트가 있는 경우
-  fontname = 'NanumGothic'
-elif 'Malgun Gothic' in fontNames:  # 'Malgun Gothic' 폰트가 있는 경우
-  fontname = 'Malgun Gothic'
-else:
-  fontname = plt.rcParams['font.family']  # 기본적으로 설정된 폰트 사용
   
-st.write(fontname)
-plt.rc('font', family=fontname)
-
 conn = st.connection('s3', type=FilesConnection)
 
 @st.cache_data(ttl=3600)
