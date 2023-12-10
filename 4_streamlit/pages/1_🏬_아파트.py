@@ -24,32 +24,17 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+# 스크립트 파일의 현재 경로를 가져오기
+script_directory = os.path.dirname(os.path.abspath(__file__))
 
-# 한글 폰트 적용
-@st.cache_data(ttl=3600)
-def fontRegistered():
-    font_dirs = [os.getcwd() + '/customFonts']
-    font_files = fm.findSystemFonts(fontpaths=font_dirs)
+# 나눔고딕 폰트 경로 설정 (customFonts 폴더 내)
+font_path = os.path.join(script_directory, 'customFonts', 'NanumGothic.ttf')
 
-    for font_file in font_files:
-        fm.fontManager.addfont(font_file)
-    fm._load_fontmanager(try_read_cache=False)
-    
-fontRegistered()
-fontNames = [f.name for f in fm.fontManager.ttflist]
-    
-if 'NanumGothic' in fontNames:  # '나눔고딕' 폰트가 있는 경우
-  fontname = 'NanumGothic'
-elif 'Malgun Gothic' in fontNames:  # 'Malgun Gothic' 폰트가 있는 경우
-  fontname = 'Malgun Gothic'
-else:
-  fontname = plt.rcParams['font.family']  # 기본적으로 설정된 폰트 사용
-  
-st.write(fontname)
-plt.rc('font', family=fontname)
+# 폰트 추가 및 적용
+fm.fontManager.addfont(font_path)
+plt.rc('font', family='NanumGothic')
   
   
-st.write(fontname)
 
 conn = st.connection('s3', type=FilesConnection)
 
