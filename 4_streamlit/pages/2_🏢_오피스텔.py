@@ -16,34 +16,13 @@ from datetime import datetime
 from st_files_connection import FilesConnection
 from PIL import Image
 
-import matplotlib.font_manager as fm  # 한글 폰트
 
 st.set_page_config(
-    page_title="아파트 대시보드",
-    page_icon="🏬",
+    page_title="오피스텔 대시보드",
+    page_icon="🏢",
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# 한글 폰트 적용
-@st.cache_data(ttl=3600)
-def fontRegistered():
-    font_dirs = [os.getcwd() + '/customFonts']
-    font_files = fm.findSystemFonts(fontpaths=font_dirs)
-
-    for font_file in font_files:
-        fm.fontManager.addfont(font_file)
-    fm._load_fontmanager(try_read_cache=False)
-    
-fontRegistered()
-fontNames = [f.name for f in fm.fontManager.ttflist]
-    
-if 'NanumGothic' in fontNames:  # '나눔고딕' 폰트가 있는 경우
-  fontname = 'NanumGothic'
-elif 'Malgun Gothic' in fontNames:  # 'Malgun Gothic' 폰트가 있는 경우
-  fontname = 'Malgun Gothic'
-else:
-  fontname = plt.rcParams['font.family']  # 기본적으로 설정된 폰트 사용
 
 conn = st.connection('s3', type=FilesConnection)
 
@@ -70,9 +49,6 @@ def read_image_s3(filename):
 # with open('4_streamlit/style.css') as f:
 #     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-
-
-
 type_option = 'apt'
 
 sig_list = ['서울특별시', '부산광역시', '대구광역시', '인천광역시', '광주광역시', '대전광역시', '울산광역시',
@@ -97,7 +73,7 @@ month_option = st.sidebar.selectbox(
 )
 
 st.title('AWS 서버를 활용한 부동산 거래 정보') 
-st.subheader(f'{sig_area} 아파트 거래 정보(2021년)')
+st.subheader(f'{sig_area} 오피스텔 거래 정보(2021년)')
 st.markdown("---")
 
 st.sidebar.markdown(
@@ -111,12 +87,13 @@ st.sidebar.markdown(
 """
 )
 
-# trade_count_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/trade_count.csv')
+# trade_count_df = read_file_csv('apart-bucket/0_data/streamlit_data/trade_count.csv')
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
-# apart_trans4 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/map_csv.csv')
-# sig_lat_lon = read_file_csv('real-estate555-bucketreal-estate555-bucket/0_data/streamlit_data/sig_lat_lon.csv')
-
+# apart_trans4 = read_file_csv('apart-bucket/0_data/streamlit_data/map_csv.csv')
+# sig_lat_lon = read_file_csv('apart-bucket/0_data/streamlit_data/sig_lat_lon.csv')
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
+
+
 
 # 막대그래프 seaborn
 vis_trade_rent = vis_func.vis_trade_rent(vis_trade_rent_df,
@@ -169,13 +146,12 @@ col5.plotly_chart(trade_count, use_container_width = True)
 #                           type_option,
 #                           sig_area)
                           
-                          
-                          
 # trade_mean_map1 = vis_func.trade_mean_map(apart_trans4,
 #                           geo_json_seoul,
 #                           sig_lat_lon,
 #                           sig_area, 
 #                           type_option)
+                          
 
 # col1, col2 = st.columns([1,1])
 # col1.plotly_chart(trade_mean1, use_container_width = True)
