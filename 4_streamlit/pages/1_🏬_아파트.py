@@ -44,6 +44,8 @@ elif 'Malgun Gothic' in fontNames:  # 'Malgun Gothic' 폰트가 있는 경우
   fontname = 'Malgun Gothic'
 else:
   fontname = plt.rcParams['font.family']  # 기본적으로 설정된 폰트 사용
+  
+st.write(fontname)
 
 conn = st.connection('s3', type=FilesConnection)
 
@@ -106,8 +108,8 @@ st.sidebar.markdown(
     - [데이터 분석으로 배우는 파이썬 문제 해결](https://www.aladin.co.kr/m/mproduct.aspx?ItemId=327566110)
     - [공공데이터](https://www.data.go.kr/)
     - [학교(나이스)](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010104913&infSeq=2)
-    - 지역별 인구(kosis 공유서비스)[https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B040A3&vw_cd=MT_ZTITLE&list_id=A_7&scrId=&seqNo=&lang_mode=ko&obj_var_id=&itm_id=&conn_path=MT_ZTITLE&path=%252FstatisticsList%252FstatisticsListIndex.do]
-    - 지리 정보 수집(지오서비스)[http://www.gisdeveloper.co.kr/?p=2332 ]
+    - [지역별 인구(kosis 공유서비스)][https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B040A3&vw_cd=MT_ZTITLE&list_id=A_7&scrId=&seqNo=&lang_mode=ko&obj_var_id=&itm_id=&conn_path=MT_ZTITLE&path=%252FstatisticsList%252FstatisticsListIndex.do]
+    - [지리 정보 수집(지오서비스)][http://www.gisdeveloper.co.kr/?p=2332 ]
 """
 )
 

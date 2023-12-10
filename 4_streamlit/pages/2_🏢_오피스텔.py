@@ -49,7 +49,7 @@ def read_image_s3(filename):
 # with open('4_streamlit/style.css') as f:
 #     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-type_option = 'apt'
+type_option = 'offi'
 
 sig_list = ['서울특별시', '부산광역시', '대구광역시', '인천광역시', '광주광역시', '대전광역시', '울산광역시',
        '세종특별자치시', '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도', '경상북도',
@@ -82,8 +82,8 @@ st.sidebar.markdown(
     - [데이터 분석으로 배우는 파이썬 문제 해결](https://www.aladin.co.kr/m/mproduct.aspx?ItemId=327566110)
     - [공공데이터](https://www.data.go.kr/)
     - [학교(나이스)](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010104913&infSeq=2)
-    - 지역별 인구(kosis 공유서비스)[https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B040A3&vw_cd=MT_ZTITLE&list_id=A_7&scrId=&seqNo=&lang_mode=ko&obj_var_id=&itm_id=&conn_path=MT_ZTITLE&path=%252FstatisticsList%252FstatisticsListIndex.do]
-    - 지리 정보 수집(지오서비스)[http://www.gisdeveloper.co.kr/?p=2332 ]
+    - [지역별 인구(kosis 공유서비스)][https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B040A3&vw_cd=MT_ZTITLE&list_id=A_7&scrId=&seqNo=&lang_mode=ko&obj_var_id=&itm_id=&conn_path=MT_ZTITLE&path=%252FstatisticsList%252FstatisticsListIndex.do]
+    - [지리 정보 수집(지오서비스)][http://www.gisdeveloper.co.kr/?p=2332 ]
 """
 )
 
