@@ -83,7 +83,7 @@ vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/v
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
 
 # 막대그래프 seaborn
-vis_trade_rent1 = vis_func.vis_trade_rent(vis_trade_rent_df,
+vis_trade_rent = vis_func.vis_trade_rent(vis_trade_rent_df,
                           type_option,
                           sig_area,
                           year_option,
@@ -113,7 +113,7 @@ trade_count = vis_func.trade_mean(vis_trade_rent_df,
                           type_option)
 
 col, col2 = st.columns([1,1])
-col.pyplot(vis_trade_rent1, use_container_width = True) 
+col.pyplot(vis_trade_rent, use_container_width = True) 
 col2.plotly_chart(vis_trade_rent2, use_container_width = True)
 
 col3, col4 = st.columns([1,1])

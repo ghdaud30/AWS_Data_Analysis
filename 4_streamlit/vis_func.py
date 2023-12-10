@@ -332,6 +332,8 @@ def school_count_gender(school, sig_area, school_name):
     
     return fig
 
+
+# 2021년 월에 따른 지역별 부동산 실거래가 평균
 def trade_mean_month(total, sig_area, type_val):
     
     # 타입 별 이름
@@ -379,9 +381,9 @@ def trade_mean_month(total, sig_area, type_val):
     plt.tight_layout()
     plt.show()    
 
-    return combined_df
-
-def trade_mean(df_trade, type_val, sig_area):
+    return fig
+# 실거래가
+def trade_mean(df_trade, sig_area, type_val):
 
     type_dic = {'apt':'아파트', 'rh':'연립다세대','sh':'단독-다가구','offi':'오피스텔'}
     type_nm = type_dic[type_val]
@@ -446,7 +448,7 @@ def trade_mean(df_trade, type_val, sig_area):
 #     for i in range(2019, 2023):
 #         fig.add_vline(x=f'{i}-01-01', line_width=1, line_dash="dash", line_color="green")
     return(fig)
-
+# 2021년 월에 따른 지역별 부동산 거래량 평균
 def trade_count_month(total, sig_area, type_val):
     
     # 타입 별 이름
@@ -493,9 +495,9 @@ def trade_count_month(total, sig_area, type_val):
     plt.tight_layout()
     plt.show()    
 
-    return combined_df
-  
-def trade_count(df_trade, type_val, sig_area):
+    return fig
+# 거래량
+def trade_count(df_trade, sig_area, type_val):
     
     type_dic = {'apt':'아파트', 'rh':'연립다세대','sh':'단독-다가구','offi':'오피스텔'}
     type_nm = type_dic[type_val]
