@@ -28,7 +28,7 @@ st.set_page_config(
 # 한글 폰트 적용
 @st.cache_data(ttl=3600)
 def fontRegistered():
-    font_dirs = ['customFonts']
+    font_dirs = './customFonts'
     font_files = fm.findSystemFonts(fontpaths=font_dirs)
 
     for font_file in font_files:
@@ -44,6 +44,9 @@ elif 'Malgun Gothic' in fontNames:  # 'Malgun Gothic' 폰트가 있는 경우
   fontname = 'Malgun Gothic'
 else:
   fontname = plt.rcParams['font.family']  # 기본적으로 설정된 폰트 사용
+  
+st.write(fontname)
+plt.rc('font', family=fontname)
 
 conn = st.connection('s3', type=FilesConnection)
 
