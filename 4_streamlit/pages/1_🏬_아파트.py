@@ -25,8 +25,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# 현재 디렉토리 경로
+current_directory = os.path.dirname(__file__)
+
 # 나눔고딕 폰트 경로 설정
-font_path = 'customFonts/NanumGothic-Regular.ttf'  # 나눔고딕 폰트 파일 경로
+font_path = os.path.join(current_directory, 'customFonts', 'NanumGothic-Regular.ttf')
 
 # 폰트 추가 및 적용
 fm.fontManager.addfont(font_path)
