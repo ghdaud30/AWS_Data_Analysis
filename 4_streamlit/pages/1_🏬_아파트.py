@@ -97,20 +97,20 @@ vis_trade_rent2 = vis_func.vis_trade_rent2(vis_trade_rent_df,
 
 # 2021년 월에 따른 지역별 부동산 실거래가 평균
 trade_mean_month = vis_func.trade_mean_month(vis_trade_rent_df,
-                          type_option,
-                          sig_area)
+                          sig_area,
+                          type_option)
 # 실거래가
 trade_mean = vis_func.trade_mean(vis_trade_rent_df,
-                          type_option,
-                          sig_area)
+                          sig_area,
+                          type_option)
 # 2021년 월에 따른 지역별 부동산 거래량 평균
 trade_count_month = vis_func.trade_count_month(vis_trade_rent_df,
-                          type_option,
-                          sig_area)
+                          sig_area,
+                          type_option)
 # 거래량
 trade_count = vis_func.trade_mean(vis_trade_rent_df,
-                          type_option,
-                          sig_area)
+                          sig_area,
+                          type_option)
 
 col, col2 = st.columns([1,1])
 col.pyplot(vis_trade_rent1, use_container_width = True) 
