@@ -25,12 +25,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-font_path = 'real-estate555-bucket/0_data/streamlit_data/customFonts/NanumGothic-Regular.ttf'
-
-# 폰트 추가 및 적용
-fm.fontManager.addfont(font_path)
-plt.rc('font', family='NanumGothic')
-
 conn = st.connection('s3', type=FilesConnection)
 
 @st.cache_data(ttl=3600)
@@ -43,6 +37,12 @@ def read_file_json(filename):
   return df
 
 s3 = boto3.resource('s3')
+
+font_path = 'real-estate555-bucket/0_data/streamlit_data/customFonts/NanumGothic-Regular.ttf'
+
+# 폰트 추가 및 적용
+fm.fontManager.addfont(font_path)
+plt.rc('font', family='NanumGothic')
 
 # s3에서 이미지 가져오는 함수
 def read_image_s3(filename):

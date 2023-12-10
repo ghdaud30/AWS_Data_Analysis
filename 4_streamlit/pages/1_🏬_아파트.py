@@ -24,15 +24,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-# 스크립트 파일의 현재 경로를 가져오기
-script_directory = os.path.dirname(os.path.abspath(__file__))
-
-# 나눔고딕 폰트 경로 설정 (customFonts 폴더 내)
-font_path = os.path.join(script_directory, 'customFonts', 'NanumGothic-Regular.ttf')
-
-# 폰트 추가 및 적용
-fm.fontManager.addfont(font_path)
-plt.rc('font', family='NanumGothic')
 
 conn = st.connection('s3', type=FilesConnection)
 
@@ -47,6 +38,12 @@ def read_file_json(filename):
 
 s3 = boto3.resource('s3')
 
+font_path = 'real-estate555-bucket/0_data/streamlit_data/customFonts/NanumGothic-Regular.ttf'
+
+# 폰트 추가 및 적용
+fm.fontManager.addfont(font_path)
+plt.rc('font', family='NanumGothic')
+
 # s3에서 이미지 가져오는 함수
 def read_image_s3(filename):
     bucket = s3.Bucket('real-estate555-bucket')
@@ -58,9 +55,6 @@ def read_image_s3(filename):
 
 # with open('4_streamlit/style.css') as f:
 #     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-
-
 
 type_option = 'apt'
 
