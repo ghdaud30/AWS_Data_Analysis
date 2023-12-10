@@ -28,13 +28,11 @@ st.set_page_config(
 script_directory = os.path.dirname(os.path.abspath(__file__))
 
 # 나눔고딕 폰트 경로 설정 (customFonts 폴더 내)
-font_path = os.path.join(script_directory, 'customFonts', 'NanumGothic.ttf')
+font_path = os.path.join(script_directory, 'customFonts', 'NanumGothic-Regular.ttf')
 
 # 폰트 추가 및 적용
 fm.fontManager.addfont(font_path)
 plt.rc('font', family='NanumGothic')
-  
-  
 
 conn = st.connection('s3', type=FilesConnection)
 
