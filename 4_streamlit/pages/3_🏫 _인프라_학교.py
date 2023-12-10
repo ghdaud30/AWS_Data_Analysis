@@ -83,8 +83,8 @@ school_vis7 = vis_func.school_count_gender(elementary_school, sig_area,'초등�
 school_vis8 = vis_func.school_count_gender(middle_shcool, sig_area,'중학교')
 school_vis9 = vis_func.school_count_gender(high_school, sig_area,'고등학교')
 
-school = ['school_vis','school_vis2','school_vis3','school_vis4','school_vis5'
-          ,'school_vis6','school_vis7','school_vis8','school_vis9']
+school = [school_vis,school_vis2,school_vis3,school_vis4,school_vis5
+          ,school_vis6,school_vis7,school_vis8,school_vis9]
 
 # 표시 행
 columns = len(school) // 3
