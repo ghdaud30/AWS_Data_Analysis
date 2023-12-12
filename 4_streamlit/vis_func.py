@@ -12,6 +12,8 @@ import json
 import math
 from plotly.validators.scatter.marker import SymbolValidator
 
+
+
 # 금액 단위를 읽기 쉽게 표현하는 함수를 만듭니다
 def readNumber(n):
     # 백만 단위 보다 크면 억 단위로 표시
@@ -231,39 +233,39 @@ def school_count_type(school, sig_area, school_name):
     
     return fig
 
-def school_count_plotly(df_trade, sig_area,school_name):
+def school_count_plotly_type(df_trade, sig_area,school_name):
   
-    aaaa_raw = df_trade[df_trade['시도명'] == sig_area]
-    aaaa_raw = aaaa_raw.reset_index(drop = True)
+    df = df_trade[df_trade['시도명'] == sig_area]
+    df = df.reset_index(drop = True)
 
 
-    aaaa_raw = aaaa_raw[['시군구명','설립명','학교명']].groupby(['시군구명','설립명']).describe()
-    aaaa_raw = aaaa_raw.reset_index()
+    df = df[['시군구명','설립명','학교명']].groupby(['시군구명','설립명']).describe()
+    df = df.reset_index()
 
-    apart_trans2 = pd.concat([aaaa_raw[['시군구명','설립명']],aaaa_raw['학교명'][['count']]], axis = 1)
-    apart_trans2.columns = ['시군구명','설립명','count']
-    apart_trans2 = apart_trans2.sort_values(by = 'count',ascending=False)
+    df2 = pd.concat([df[['시군구명','설립명']],df['학교명'][['count']]], axis = 1)
+    df2.columns = ['시군구명','설립명','count']
+    df2 = df2.sort_values(by = 'count',ascending=False)
 
     
     fig = go.Figure(data=[
         go.Bar(
           name = '사립', 
-          x=apart_trans2[apart_trans2['설립명'] == '사립']['시군구명'],
-          y=apart_trans2[apart_trans2['설립명'] == '사립']['count'],
+          x=df2[df2['설립명'] == '사립']['시군구명'],
+          y=df2[df2['설립명'] == '사립']['count'],
           hovertemplate='%{y}개'
         ),
 
         go.Bar(
           name = '공립', 
-          x=apart_trans2[apart_trans2['설립명'] == '공립']['시군구명'],
-          y=apart_trans2[apart_trans2['설립명'] == '공립']['count'],
+          x=df2[df2['설립명'] == '공립']['시군구명'],
+          y=df2[df2['설립명'] == '공립']['count'],
           hovertemplate='%{y}개'
         ),
 
         go.Bar(
           name = '국립',
-          x=apart_trans2[apart_trans2['설립명'] == '국립']['시군구명'],
-          y=apart_trans2[apart_trans2['설립명'] == '국립']['count'],
+          x=df2[df2['설립명'] == '국립']['시군구명'],
+          y=df2[df2['설립명'] == '국립']['count'],
           hovertemplate='%{y}개'
 
         )
@@ -271,7 +273,7 @@ def school_count_plotly(df_trade, sig_area,school_name):
 
 
     fig.update_layout(
-            title= f'{sig_area} 시군구별 {school_name} 수 <br><sup>단위(명)</sup>',
+            title= f'{sig_area} 시군구별 {school_name} 수 (국공립사립 여부) <br><sup>단위(명)</sup>',
             title_font_family="맑은고딕",
             title_font_size = 18,
             hoverlabel=dict(
@@ -287,6 +289,64 @@ def school_count_plotly(df_trade, sig_area,school_name):
         )
 
     return(fig)
+
+def school_count_plotly_gender(df_trade, sig_area,school_name):
+  
+    df = df_trade[df_trade['시도명'] == sig_area]
+    df = df.reset_index(drop = True)
+
+
+    df = df[['시군구명','남녀공학구분명','학교명']].groupby(['시군구명','남녀공학구분명']).describe()
+    df = df.reset_index()
+
+    df2 = pd.concat([df[['시군구명','남녀공학구분명']],df['학교명'][['count']]], axis = 1)
+    df2.columns = ['시군구명','남녀공학구분명','count']
+    df2 = df2.sort_values(by = 'count',ascending=False)
+
+    
+    fig = go.Figure(data=[
+        go.Bar(
+          name = '남녀공학', 
+          x=df2[df2['남녀공학구분명'] == '남녀공학']['시군구명'],
+          y=df2[df2['남녀공학구분명'] == '남녀공학']['count'],
+          hovertemplate='%{y}개'
+        ),
+
+        go.Bar(
+          name = '남', 
+          x=df2[df2['남녀공학구분명'] == '남']['시군구명'],
+          y=df2[df2['남녀공학구분명'] == '남']['count'],
+          hovertemplate='%{y}개'
+        ),
+
+        go.Bar(
+          name = '여',
+          x=df2[df2['남녀공학구분명'] == '여']['시군구명'],
+          y=df2[df2['남녀공학구분명'] == '여']['count'],
+          hovertemplate='%{y}개'
+
+        )
+        ])
+
+    fig.update_layout(
+            title= f'{sig_area} 시군구별 {school_name} 수 (남녀공학 여부) <br><sup>단위(명)</sup>',
+            title_font_family="맑은고딕",
+            title_font_size = 18,
+            hoverlabel=dict(
+                bgcolor='white',
+                font_size=15,
+            ),
+            hovermode="x unified",
+            template='plotly_white', 
+            xaxis_tickangle=90,
+            yaxis_tickformat = ',',
+            legend = dict(orientation = 'h', xanchor = "center", x = 0.85, y= 1.1), #Adjust legend position
+            barmode='group'
+        )
+
+    return(fig)
+
+
 
 def school_count_gender(school, sig_area, school_name):
     # 선택한 지역을 특정해줍니다

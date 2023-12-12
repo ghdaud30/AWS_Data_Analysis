@@ -76,7 +76,6 @@ st.markdown("---")
 st.sidebar.markdown(
     """
     # Reference
-    - [데이터 분석으로 배우는 파이썬 문제 해결](https://www.aladin.co.kr/m/mproduct.aspx?ItemId=327566110)
     - [공공데이터](https://www.data.go.kr/)
     - [학교(나이스)](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010104913&infSeq=2)
     - [지역별 인구(kosis 공유서비스)](https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B040A3&vw_cd=MT_ZTITLE&list_id=A_7&scrId=&seqNo=&lang_mode=ko&obj_var_id=&itm_id=&conn_path=MT_ZTITLE&path=%252FstatisticsList%252FstatisticsListIndex.do)
@@ -95,47 +94,44 @@ middle_shcool['시군구명'] = middle_shcool['도로명주소'].str.split(' ').
 high_school['시도명'] = high_school['도로명주소'].str.split(' ').str[0]
 high_school['시군구명'] = high_school['도로명주소'].str.split(' ').str[1]
 
-school_vis = vis_func.school_count_type(elementary_school, sig_area,'초등학교')
-school_vis2 = vis_func.school_count_type(middle_shcool, sig_area,'중학교')
-school_vis3 = vis_func.school_count_type(high_school, sig_area,'고등학교')
+school_vis = vis_func.school_count_plotly_type(elementary_school, sig_area,'초등학교')
+school_vis2 = vis_func.school_count_plotly_type(middle_shcool, sig_area,'중학교')
+school_vis3 = vis_func.school_count_plotly_type(high_school, sig_area,'고등학교')
 
-school_vis4 = vis_func.school_count_plotly(elementary_school, sig_area,'초등학교')
-school_vis5 = vis_func.school_count_plotly(middle_shcool, sig_area,'중학교')
-school_vis6 = vis_func.school_count_plotly(high_school, sig_area,'고등학교')
+school_vis4 = vis_func.school_count_plotly_gender(elementary_school, sig_area,'초등학교')
+school_vis5 = vis_func.school_count_plotly_gender(middle_shcool, sig_area,'중학교')
+school_vis6 = vis_func.school_count_plotly_gender(high_school, sig_area,'고등학교')
 
-school_vis7 = vis_func.school_count_gender(elementary_school, sig_area,'초등학교')
-school_vis8 = vis_func.school_count_gender(middle_shcool, sig_area,'중학교')
-school_vis9 = vis_func.school_count_gender(high_school, sig_area,'고등학교')
 
-school = [school_vis,school_vis2,school_vis3,school_vis4,school_vis5
-          ,school_vis6,school_vis7,school_vis8,school_vis9]
+# school = [school_vis,school_vis2,school_vis3,school_vis4,school_vis5
+#           ,school_vis6,school_vis7,school_vis8,school_vis9]
 
-# 표시 행
-columns = len(school) // 3
+# # 표시 행
+# columns = len(school) // 3
 
-n = 0
+# n = 0
 
-for i in range(0, len(school), columns):
-    col = st.columns([1,1,1])
+# for i in range(0, len(school), columns):
+#     col = st.columns([1,1,1])
     
-    for j in range(len(col)):
-      if(i == 3):
-        col[j].plotly_chart(school[i + j], use_container_width = True)
-        n += 1
-        continue
-      else:
-        col[j].pyplot(school[i + j], use_container_width = True)
-        n += 1
+#     for j in range(len(col)):
+#       if(i == 3):
+#         col[j].plotly_chart(school[i + j], use_container_width = True)
+#         n += 1
+#         continue
+#       else:
+#         col[j].pyplot(school[i + j], use_container_width = True)
+#         n += 1
     
-# col1, col2, col3 = st.columns([1,1,1])
-# col1.pyplot(school_vis1, use_container_width = True) 
-# col2.pyplot(school_vis2, use_container_width = True)
-# col3.pyplot(school_vis3, use_container_width = True)
+col, col2, col3 = st.columns([1,1,1])
+col.plotly_chart(school_vis, use_container_width = True) 
+col2.plotly_chart(school_vis2, use_container_width = True)
+col3.plotly_chart(school_vis3, use_container_width = True)
 
-# col4, col5, col6 = st.columns([1,1,1])
-# col4.plotly_chart(school_vis4, use_container_width = True) 
-# col5.plotly_chart(school_vis5, use_container_width = True)
-# col6.plotly_chart(school_vis6, use_container_width = True)
+col4, col5, col6 = st.columns([1,1,1])
+col4.plotly_chart(school_vis4, use_container_width = True) 
+col5.plotly_chart(school_vis5, use_container_width = True)
+col6.plotly_chart(school_vis6, use_container_width = True)
 
 # col7, col8, col9 = st.columns([1,1,1])
 # col7.pyplot(school_vis7, use_container_width = True) 
