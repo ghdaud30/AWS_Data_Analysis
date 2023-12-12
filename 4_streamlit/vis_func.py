@@ -306,9 +306,9 @@ def school_count_plotly_gender(df_trade, sig_area,school_name):
     
     fig = go.Figure(data=[
         go.Bar(
-          name = '남녀공학', 
-          x=df2[df2['남녀공학구분명'] == '남녀공학']['시군구명'],
-          y=df2[df2['남녀공학구분명'] == '남녀공학']['count'],
+          name = '남여공학', 
+          x=df2[df2['남녀공학구분명'] == '남여공학']['시군구명'],
+          y=df2[df2['남녀공학구분명'] == '남여공학']['count'],
           hovertemplate='%{y}개'
         ),
 
