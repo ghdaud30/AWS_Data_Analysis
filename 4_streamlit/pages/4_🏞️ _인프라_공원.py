@@ -72,6 +72,9 @@ st.sidebar.markdown(
 
 public_city_park = read_file_csv('real-estate555-bucket/0_data/streamlit_data/public_city_park.csv')
 
+public_city_park['시도명'] = public_city_park['소재지도로명주소'].str.split(' ').str[0]
+public_city_park['시도명']
+
 park_vis = vis_func.park_geo(public_city_park, sig_area)
 
 col, col2 = st.columns([1,1])
