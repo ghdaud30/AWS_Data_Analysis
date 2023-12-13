@@ -535,7 +535,7 @@ def trade_count_month(total, sig_area, type_val):
     cursor.connect("add", lambda sel: sel.annotation.set_text(f'({sel.target[0]:.1f}, {sel.target[1]:.1f})'))
     
     plt.title(f'{sig_area} {type_nm} 매매(실거래가)/전월세(보증금) 거래량', pad=20, fontsize=20)
-
+    plt.text(0.3, 1.015, '단위(만원)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
     
     # x와 y 축 레이블 제거
     plt.xlabel('')
