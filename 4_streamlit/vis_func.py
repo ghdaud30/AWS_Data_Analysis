@@ -59,7 +59,7 @@ def vis_trade_rent(total, type_val, sig_area, year_val, month_val):
     cursor.connect("add", lambda sel: sel.annotation.set_text(f'({sel.target[0]:.1f}, {sel.target[1]:.1f})'))
     
     plt.title(f'{sig_area} 시군구별 아파트 매매(실거래가)/전월세(보증금) 평균값', pad=20, fontsize=20)
-    plt.text(0.8, 1.015, '단위(만원)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
+    plt.text(0.25, 1.015, '단위(만원)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
     
     # x와 y 축 레이블 제거
     plt.xlabel('')
