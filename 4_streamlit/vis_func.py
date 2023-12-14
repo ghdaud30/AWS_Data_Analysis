@@ -59,7 +59,7 @@ def vis_trade_rent(total, type_val, sig_area, year_val, month_val):
     cursor.connect("add", lambda sel: sel.annotation.set_text(f'({sel.target[0]:.1f}, {sel.target[1]:.1f})'))
     
     plt.title(f'{sig_area} 시군구별 아파트 매매(실거래가)/전월세(보증금) 평균값', pad=20, fontsize=20)
-    plt.text(0.8, 1.015, '단위(만원)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
+    plt.text(0.25, 1.015, '단위(만원)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
     
     # x와 y 축 레이블 제거
     plt.xlabel('')
@@ -535,7 +535,7 @@ def trade_count_month(total, sig_area, type_val):
     cursor.connect("add", lambda sel: sel.annotation.set_text(f'({sel.target[0]:.1f}, {sel.target[1]:.1f})'))
     
     plt.title(f'{sig_area} {type_nm} 매매(실거래가)/전월세(보증금) 거래량', pad=20, fontsize=20)
-
+    plt.text(0.3, 1.015, '단위(만원)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
     
     # x와 y 축 레이블 제거
     plt.xlabel('')
@@ -613,3 +613,35 @@ def trade_count(df_trade, sig_area, type_val):
 #         fig.add_vline(x=f'{i}-01-01', line_width=1, line_dash="dash", line_color="green")
     return(fig)  
 
+
+# 공원 지도
+def park_geo(park_raw, sig_area):
+    public_park_df = park_raw[park_raw['시도명'] == sig_area]
+    
+    fig = px.scatter_mapbox(public_park_df,
+                            lat="위도",
+                            lon="경도",
+                            color="공원구분",
+                            hover_data={
+                                "위도" : False,
+                                "경도" : False,
+                              "공원명" : True,
+                              "공원구분": True,
+                              "소재지도로명주소": True,
+                                "관리기관명" : True
+                              },
+                            zoom = 10,
+                            title = f'{sig_area} 시군구별 도시 공원 위치',
+                              )
+
+    fig.update_layout(
+      mapbox_style="carto-positron",
+      margin={"r":0,"t":50,"l":0,"b":0},
+      hoverlabel=dict(
+        bgcolor='white',
+        font_size=15,
+        ),
+        template='plotly_white'
+      )
+        
+    return(fig) 
