@@ -24,7 +24,7 @@ def readNumber(n):
     # 작으면 그대로 반환
     else:
         c = format(n,',d') + '만'
-    return(c)
+    return c
  
 def vis_trade_rent(total, type_val, sig_area, year_val, month_val):
     
@@ -73,7 +73,8 @@ def vis_trade_rent(total, type_val, sig_area, year_val, month_val):
     plt.xticks(rotation=90)  # x축 라벨 회전
     plt.grid(axis='y')  # y축 그리드 표시
     
-    return (fig) 
+    return fig
+ 
 # plotly 사용
 def vis_trade_rent2(total, type_val, sig_area, year_val, month_val):
     
@@ -114,7 +115,8 @@ def vis_trade_rent2(total, type_val, sig_area, year_val, month_val):
         bargap=0.15
     )
 
-    return(fig)
+    return fig
+
 # plotly 사용  
 def vis_trade_rent3(total, type_val, sig_area, year_val, month_val):
 
@@ -186,7 +188,7 @@ def vis_trade_rent3(total, type_val, sig_area, year_val, month_val):
         barmode='group'
     )
 
-    return(fig)
+    return fig
 
 #  학교
 def school_count_type(school, sig_area, school_name):
@@ -216,6 +218,50 @@ def school_count_type(school, sig_area, school_name):
     
     # 제목 , 부제목
     plt.title(f'{sig_area} 시군구별 {school_name} 수(국공립사립 여부)', pad=20, fontsize=20)
+    plt.text(0.4, 1.015, '단위(명)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
+    
+    # 축 레이블과 범례 폰트 크기 설정
+    plt.yticks(fontsize=14)
+    plt.xticks(fontsize=14)
+    plt.xlabel('')
+    plt.ylabel('')
+    plt.legend(prop={'size': 20}, loc='upper right')  # 범례의 폰트 크기를 12로 조절
+    
+    plt.xticks(rotation=90)  # x축 라벨 회전
+    plt.grid(axis='y')  # y축 그리드 표시
+
+    plt.tight_layout()
+    plt.show()
+    
+    return fig
+
+def school_count_gender(school, sig_area, school_name):
+    # 선택한 지역을 특정해줍니다
+    school2 = school[school['시도명'] == sig_area]
+    school2.reset_index(drop=True, inplace = True)
+    
+    school2 = school2[['시군구명','남녀공학구분명','학교명']].groupby(['시군구명','남녀공학구분명']).describe()
+    school2 = school2.reset_index()
+    
+    # 학교 갯수를 합쳐 줍니다
+    school3 = pd.concat([school2[['시군구명','남녀공학구분명']],school2['학교명'][['count']]], axis = 1)
+    school3.columns = ['시군구명','남녀공학구분명','count']
+    
+     # 각 거래 타입에 대한 데이터 추출
+    school_dual = school3[school3['남녀공학구분명'] == '남여공학']
+    school_man = school3[school3['남녀공학구분명'] == '남']
+    school_girl = school3[school3['남녀공학구분명'] == '여']
+    
+    # 데이터 다시 합쳐주기
+    school4 = pd.concat([school_dual, school_man, school_girl])
+    school4 = school4.sort_values(by='count',ascending=False)
+    
+    # 막대 그래프 그리기
+    fig, ax = plt.subplots(figsize=(16, 10))
+    sns.barplot(x='시군구명', y='count', hue='남녀공학구분명', data=school4)
+    
+    # 제목 , 부제목
+    plt.title(f'{sig_area} 시군구별 {school_name} 수(남녀공학 여부)', pad=20, fontsize=20)
     plt.text(0.4, 1.015, '단위(명)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
     
     # 축 레이블과 범례 폰트 크기 설정
@@ -345,52 +391,6 @@ def school_count_plotly_gender(df_trade, sig_area,school_name):
         )
 
     return(fig)
-
-
-
-def school_count_gender(school, sig_area, school_name):
-    # 선택한 지역을 특정해줍니다
-    school2 = school[school['시도명'] == sig_area]
-    school2.reset_index(drop=True, inplace = True)
-    
-    school2 = school2[['시군구명','남녀공학구분명','학교명']].groupby(['시군구명','남녀공학구분명']).describe()
-    school2 = school2.reset_index()
-    
-    # 학교 갯수를 합쳐 줍니다
-    school3 = pd.concat([school2[['시군구명','남녀공학구분명']],school2['학교명'][['count']]], axis = 1)
-    school3.columns = ['시군구명','남녀공학구분명','count']
-    
-     # 각 거래 타입에 대한 데이터 추출
-    school_dual = school3[school3['남녀공학구분명'] == '남여공학']
-    school_man = school3[school3['남녀공학구분명'] == '남']
-    school_girl = school3[school3['남녀공학구분명'] == '여']
-    
-    # 데이터 다시 합쳐주기
-    school4 = pd.concat([school_dual, school_man, school_girl])
-    school4 = school4.sort_values(by='count',ascending=False)
-    
-    # 막대 그래프 그리기
-    fig, ax = plt.subplots(figsize=(16, 10))
-    sns.barplot(x='시군구명', y='count', hue='남녀공학구분명', data=school4)
-    
-    # 제목 , 부제목
-    plt.title(f'{sig_area} 시군구별 {school_name} 수(남녀공학 여부)', pad=20, fontsize=20)
-    plt.text(0.4, 1.015, '단위(명)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
-    
-    # 축 레이블과 범례 폰트 크기 설정
-    plt.yticks(fontsize=14)
-    plt.xticks(fontsize=14)
-    plt.xlabel('')
-    plt.ylabel('')
-    plt.legend(prop={'size': 20}, loc='upper right')  # 범례의 폰트 크기를 12로 조절
-    
-    plt.xticks(rotation=90)  # x축 라벨 회전
-    plt.grid(axis='y')  # y축 그리드 표시
-
-    plt.tight_layout()
-    plt.show()
-    
-    return fig
 
 
 # 2021년 월에 따른 지역별 부동산 실거래가 평균
@@ -613,11 +613,55 @@ def trade_count(df_trade, sig_area, type_val):
 
 #     for i in range(2019, 2023):
 #         fig.add_vline(x=f'{i}-01-01', line_width=1, line_dash="dash", line_color="green")
-    return(fig)  
+    return fig
 
+# 공원 갯수
+def park_count(park_raw, sig_area):
+    
+    public_park_df = park_raw[park_raw['시도명'] == sig_area]
+    public_park_df = public_park_df.reset_index(drop=True)        
+    
+    public_park_df = public_park_df[['시군구명','공원구분','공원명']].groupby(['시군구명','공원구분']).describe()
+    public_park_df = public_park_df.reset_index()
+    
+    public_park_df2 = pd.concat([public_park_df[['시군구명','공원구분']],public_park_df['공원명'][['count']]], axis = 1)
+    public_park_df2.columns = ['시군구명','공원구분','count']
+    
+    fig = go.Figure()
+    
+    key_list = public_park_df2['공원구분'].unique()
+    
+    for key in key_list:
+        fig.add_trace(go.Bar(
+          name = key,
+          x=public_park_df2[public_park_df2['공원구분'] == key]['시군구명'],
+          y=public_park_df2[public_park_df2['공원구분'] == key]['count'],
+          hovertemplate='%{y}개'
+            )
+        )
 
+    fig.update_layout(
+        title= f'{sig_area} 시군구별 도시 공원 개수 <br><sup>단위(개)</sup>',
+        title_font_family="맑은고딕",
+        title_font_size = 18,
+        
+        hoverlabel=dict(
+            bgcolor='white',
+            font_size=15,
+        ),
+        
+        hovermode="x unified",
+        template='plotly_white', 
+        xaxis_tickangle=90,
+        yaxis_tickformat = ',',
+        legend = dict(orientation = 'h', xanchor = "center", x = 0.85, y= 1.1), #Adjust legend position
+        barmode='stack'
+    )
+
+    return fig
 # 공원 지도
 def park_geo(park_raw, sig_area):
+    
     public_park_df = park_raw[park_raw['시도명'] == sig_area]
     
     fig = px.scatter_mapbox(public_park_df,
@@ -646,4 +690,4 @@ def park_geo(park_raw, sig_area):
         template='plotly_white'
       )
         
-    return(fig) 
+    return fig
