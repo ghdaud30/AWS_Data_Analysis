@@ -69,7 +69,7 @@ park_vis2 = vis_func.park_count(public_city_park, sig_area)
 
 col, col2= st.columns([1,1])
 col.plotly_chart(park_vis, use_container_width = True) 
-col2.plotly_chart(park_vis, use_container_width = True)
+col2.plotly_chart(park_vis2, use_container_width = True)
 
 
 st.sidebar.markdown(
