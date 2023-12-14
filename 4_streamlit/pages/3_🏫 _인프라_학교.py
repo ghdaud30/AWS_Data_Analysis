@@ -76,9 +76,8 @@ st.markdown("---")
 st.sidebar.markdown(
     """
     # Reference
-    - [아파트](https://www.data.go.kr/)
+    - [공공데이터](https://www.data.go.kr/)
     - [학교(나이스)](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010104913&infSeq=2)
-    - [지역별 공원](https://www.data.go.kr/data/15012890/standard.do)
     - [지역별 인구(kosis 공유서비스)](https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_1B040A3&vw_cd=MT_ZTITLE&list_id=A_7&scrId=&seqNo=&lang_mode=ko&obj_var_id=&itm_id=&conn_path=MT_ZTITLE&path=%252FstatisticsList%252FstatisticsListIndex.do)
     - [지리 정보 수집(지오서비스)](http://www.gisdeveloper.co.kr/?p=2332)
 """
