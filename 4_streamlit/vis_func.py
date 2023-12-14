@@ -74,7 +74,7 @@ def vis_trade_rent(total, type_val, sig_area, year_val, month_val):
     plt.grid(axis='y')  # y축 그리드 표시
     
     return (fig) 
-# plotly 사용
+
 def vis_trade_rent2(total, type_val, sig_area, year_val, month_val):
     
     # 타입 별 이름
@@ -115,7 +115,7 @@ def vis_trade_rent2(total, type_val, sig_area, year_val, month_val):
     )
 
     return(fig)
-# plotly 사용  
+
 def vis_trade_rent3(total, type_val, sig_area, year_val, month_val):
 
     type_dic = {'apt':'아파트', 'rh':'연립다세대','sh':'단독-다가구','offi':'오피스텔'}
@@ -216,6 +216,50 @@ def school_count_type(school, sig_area, school_name):
     
     # 제목 , 부제목
     plt.title(f'{sig_area} 시군구별 {school_name} 수(국공립사립 여부)', pad=20, fontsize=20)
+    plt.text(0.4, 1.015, '단위(명)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
+    
+    # 축 레이블과 범례 폰트 크기 설정
+    plt.yticks(fontsize=14)
+    plt.xticks(fontsize=14)
+    plt.xlabel('')
+    plt.ylabel('')
+    plt.legend(prop={'size': 20}, loc='upper right')  # 범례의 폰트 크기를 12로 조절
+    
+    plt.xticks(rotation=90)  # x축 라벨 회전
+    plt.grid(axis='y')  # y축 그리드 표시
+
+    plt.tight_layout()
+    plt.show()
+    
+    return fig
+
+def school_count_gender(school, sig_area, school_name):
+    # 선택한 지역을 특정해줍니다
+    school2 = school[school['시도명'] == sig_area]
+    school2.reset_index(drop=True, inplace = True)
+    
+    school2 = school2[['시군구명','남녀공학구분명','학교명']].groupby(['시군구명','남녀공학구분명']).describe()
+    school2 = school2.reset_index()
+    
+    # 학교 갯수를 합쳐 줍니다
+    school3 = pd.concat([school2[['시군구명','남녀공학구분명']],school2['학교명'][['count']]], axis = 1)
+    school3.columns = ['시군구명','남녀공학구분명','count']
+    
+     # 각 거래 타입에 대한 데이터 추출
+    school_dual = school3[school3['남녀공학구분명'] == '남여공학']
+    school_man = school3[school3['남녀공학구분명'] == '남']
+    school_girl = school3[school3['남녀공학구분명'] == '여']
+    
+    # 데이터 다시 합쳐주기
+    school4 = pd.concat([school_dual, school_man, school_girl])
+    school4 = school4.sort_values(by='count',ascending=False)
+    
+    # 막대 그래프 그리기
+    fig, ax = plt.subplots(figsize=(16, 10))
+    sns.barplot(x='시군구명', y='count', hue='남녀공학구분명', data=school4)
+    
+    # 제목 , 부제목
+    plt.title(f'{sig_area} 시군구별 {school_name} 수(남녀공학 여부)', pad=20, fontsize=20)
     plt.text(0.4, 1.015, '단위(명)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
     
     # 축 레이블과 범례 폰트 크기 설정
@@ -345,52 +389,6 @@ def school_count_plotly_gender(df_trade, sig_area,school_name):
         )
 
     return(fig)
-
-
-
-def school_count_gender(school, sig_area, school_name):
-    # 선택한 지역을 특정해줍니다
-    school2 = school[school['시도명'] == sig_area]
-    school2.reset_index(drop=True, inplace = True)
-    
-    school2 = school2[['시군구명','남녀공학구분명','학교명']].groupby(['시군구명','남녀공학구분명']).describe()
-    school2 = school2.reset_index()
-    
-    # 학교 갯수를 합쳐 줍니다
-    school3 = pd.concat([school2[['시군구명','남녀공학구분명']],school2['학교명'][['count']]], axis = 1)
-    school3.columns = ['시군구명','남녀공학구분명','count']
-    
-     # 각 거래 타입에 대한 데이터 추출
-    school_dual = school3[school3['남녀공학구분명'] == '남여공학']
-    school_man = school3[school3['남녀공학구분명'] == '남']
-    school_girl = school3[school3['남녀공학구분명'] == '여']
-    
-    # 데이터 다시 합쳐주기
-    school4 = pd.concat([school_dual, school_man, school_girl])
-    school4 = school4.sort_values(by='count',ascending=False)
-    
-    # 막대 그래프 그리기
-    fig, ax = plt.subplots(figsize=(16, 10))
-    sns.barplot(x='시군구명', y='count', hue='남녀공학구분명', data=school4)
-    
-    # 제목 , 부제목
-    plt.title(f'{sig_area} 시군구별 {school_name} 수(남녀공학 여부)', pad=20, fontsize=20)
-    plt.text(0.4, 1.015, '단위(명)', ha='center', va='center', fontsize=15, color='gray', transform=plt.gca().transAxes)
-    
-    # 축 레이블과 범례 폰트 크기 설정
-    plt.yticks(fontsize=14)
-    plt.xticks(fontsize=14)
-    plt.xlabel('')
-    plt.ylabel('')
-    plt.legend(prop={'size': 20}, loc='upper right')  # 범례의 폰트 크기를 12로 조절
-    
-    plt.xticks(rotation=90)  # x축 라벨 회전
-    plt.grid(axis='y')  # y축 그리드 표시
-
-    plt.tight_layout()
-    plt.show()
-    
-    return fig
 
 
 # 2021년 월에 따른 지역별 부동산 실거래가 평균
