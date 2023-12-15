@@ -105,10 +105,10 @@ st.sidebar.markdown(
 """
 )
 
-apart_trans = pd.read_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
+apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
 apart_trans2 = apart_trans[apart_trans['시도명'] == sig_area]
 
-sig_lat_lon = pd.read_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
+sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
 sig_lat_lon2 = sig_lat_lon[sig_lat_lon['sig_nm'] == sig_area].reset_index(drop = True)
 
 # geo_json = json.load(open(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson', encoding = 'utf-8'))
