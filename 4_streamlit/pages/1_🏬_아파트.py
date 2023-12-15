@@ -73,7 +73,13 @@ sig_area = st.sidebar.selectbox(
     sig_list
 )
 
-year_list = [2021,2022,2023]
+type_list = ['매매','전세','월세']
+type_val = st.sidebar.selectbox(
+    "거래 타입 선택",
+    type_list
+)
+
+year_list = [2021,2022]
 year_option = st.sidebar.selectbox(
  'year',
  year_list
@@ -86,7 +92,7 @@ month_option = st.sidebar.selectbox(
 )
 
 st.title('AWS 서버를 활용한 부동산 거래 정보') 
-st.subheader(f'{sig_area} 아파트 거래 정보(2021년)')
+st.subheader(f'{sig_area} 아파트 거래 정보{year_option}')
 st.markdown("---")
 
 st.sidebar.markdown(
@@ -147,15 +153,17 @@ trade_count = vis_func.trade_count(vis_trade_rent_df,
 col, col2 = st.columns([1,1])
 col.pyplot(vis_trade_rent, use_container_width = True) 
 col2.plotly_chart(vis_trade_rent2, use_container_width = True)
+st.markdown("---")
 
 col3, col4 = st.columns([1,1])
 col3.pyplot(trade_mean_month, use_container_width = True) 
 col4.plotly_chart(trade_mean, use_container_width = True)
+st.markdown("---")
 
 col4, col5 = st.columns([1,1])
 col4.pyplot(trade_count_month, use_container_width = True) 
 col5.plotly_chart(trade_count, use_container_width = True)
-
+st.markdown("---")
 
 # trade_count1 = vis_func.trade_count(trade_count_df,
 #                           type_option,
