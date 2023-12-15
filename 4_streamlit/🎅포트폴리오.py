@@ -122,7 +122,7 @@ with st.container():
     
     st.markdown("### 🖍️ 자격증")
     st.markdown(" - 컴퓨터활용능력 2급")
-    st.markdown(" - 워드프로세서 1급")
+    st.markdown(" - 워드프로세서")
     st.markdown(" - 한국사능력검정시험 1급")
     st.markdown(" - 운전면허자격증 2종 보통")
     st.markdown("---")
