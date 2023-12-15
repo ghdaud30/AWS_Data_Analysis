@@ -45,6 +45,10 @@ def read_file_csv(filename):
 def read_file_json(filename):
   df = conn.read(filename, input_format="json", ttl=600)
   return df
+@st.cache_data(ttl=3600)
+def read_file_geojson(filename):
+  df = conn.read(filename, input_format="geojson", ttl=600)
+  return df
 
 s3 = boto3.resource('s3')
 
@@ -71,7 +75,7 @@ sig_area = st.sidebar.selectbox(
     sig_list
 )
 
-year_list = [2021]
+year_list = [2021,2022,2023]
 year_option = st.sidebar.selectbox(
  'year',
  year_list
@@ -103,7 +107,7 @@ st.sidebar.markdown(
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 # apart_trans4 = read_file_csv('apart-bucket/0_data/streamlit_data/map_csv.csv')
 # sig_lat_lon = read_file_csv('apart-bucket/0_data/streamlit_data/sig_lat_lon.csv')
-geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
+# geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
 
 
 

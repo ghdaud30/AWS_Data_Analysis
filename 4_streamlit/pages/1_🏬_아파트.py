@@ -47,6 +47,10 @@ def read_file_csv(filename):
 def read_file_json(filename):
   df = conn.read(filename, input_format="json", ttl=600)
   return df
+@st.cache_data(ttl=3600)
+def read_file_geojson(filename):
+  df = conn.read(filename, input_format="geojson", ttl=600)
+  return df
 
 s3 = boto3.resource('s3')
 
@@ -73,7 +77,7 @@ sig_area = st.sidebar.selectbox(
     sig_list
 )
 
-year_list = [2021]
+year_list = [2021,2022,2023]
 year_option = st.sidebar.selectbox(
  'year',
  year_list
@@ -101,12 +105,20 @@ st.sidebar.markdown(
 """
 )
 
+apart_trans = pd.read_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/map_csv.csv')
+apart_trans2 = apart_trans[apart_trans['시도명'] == sig_area]
+
+sig_lat_lon = pd.read_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
+sig_lat_lon2 = sig_lat_lon[sig_lat_lon['sig_nm'] == sig_area].reset_index(drop = True)
+
+geo_json = json.load(open(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson', encoding = 'utf-8'))
+
 # trade_count_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/trade_count.csv')
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 # apart_trans4 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/map_csv.csv')
 # sig_lat_lon = read_file_csv('real-estate555-bucketreal-estate555-bucket/0_data/streamlit_data/sig_lat_lon.csv')
 
-geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
+geo_json = read_file_geojson(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
 
 # 막대그래프 seaborn
 vis_trade_rent = vis_func.vis_trade_rent(vis_trade_rent_df,
