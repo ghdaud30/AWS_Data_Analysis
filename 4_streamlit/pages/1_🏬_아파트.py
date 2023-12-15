@@ -47,10 +47,6 @@ def read_file_csv(filename):
 def read_file_json(filename):
   df = conn.read(filename, input_format="json", ttl=600)
   return df
-@st.cache_data(ttl=3600)
-def read_file_geojson(filename):
-  df = conn.read(filename, input_format="geojson", ttl=600)
-  return df
 
 s3 = boto3.resource('s3')
 
@@ -116,7 +112,7 @@ sig_lat_lon2 = sig_lat_lon[sig_lat_lon['sig_nm'] == sig_area].reset_index(drop =
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 # sig_lat_lon = read_file_csv('real-estate555-bucketreal-estate555-bucket/0_data/streamlit_data/sig_lat_lon.csv')
 
-geo_json = read_file_geojson(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
+geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
 
 # 막대그래프 seaborn
 vis_trade_rent = vis_func.vis_trade_rent(vis_trade_rent_df,
