@@ -731,7 +731,7 @@ def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, year_option, mo
     
     fig.update_layout(
       margin={"r":0,"t":50,"l":0,"b":0},
-      title = f'{sig_area} 시군구별 {type_nm} {type_val} 거래금액 지도({year_list}년 {month_list}월 기준)',
+      title = f'{sig_area} 시군구별 {type_nm} {type_val} 거래금액 지도({year_option}년 {month_option}월 기준)',
       title_font_family="맑은고딕",
       title_font_size = 18,
       hoverlabel=dict(
