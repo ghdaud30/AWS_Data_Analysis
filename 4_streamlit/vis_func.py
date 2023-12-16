@@ -699,8 +699,8 @@ def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, year_list, mont
     type_nm = type_dic[type_option]
 
     apart_trans2 = apart_trans[apart_trans['시도명'] == sig_area]
-    apart_trans2 = apart_trans2[apart_trans['년'] == year_list]
-    apart_trans2 = apart_trans2[apart_trans['월'] == month_list]
+    apart_trans2 = apart_trans2[apart_trans2['년'] == year_list]
+    apart_trans2 = apart_trans2[apart_trans2['월'] == month_list]
     apart_trans3 = apart_trans2[apart_trans2['구분'] == type_val]
     apart_trans4 = apart_trans3[apart_trans2['타입'] == type_option].reset_index(drop = True)
     
@@ -757,20 +757,14 @@ def map_trade(df, trade_option,
           (df_trade_202210_2['거래금액'] <= amount_value_1) &
           (df_trade_202210_2['전용면적'] >= area_value_0) & 
           (df_trade_202210_2['전용면적'] <= area_value_1) &
-          (df_trade_202210_2['사용승인일'] >= year_value_0) & 
-          (df_trade_202210_2['사용승인일'] <= year_value_1) & 
+          (df_trade_202210_2['건축년도'] >= year_value_0) & 
+          (df_trade_202210_2['건축년도'] <= year_value_1) & 
           (df_trade_202210_2['층'] >= floor_value_0) & 
           (df_trade_202210_2['층'] <= floor_value_1)
           ]
         
         if('아파트' in df.columns):
             apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
-        elif('연립다세대' in df.columns):
-            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['연립다세대']
-        elif('단지' in df.columns):
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['단지']
-            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
         
         apt_trade_202210_3['거래금액_int'] = apt_trade_202210_3['거래금액'].astype(int)
         apt_trade_202210_3['거래금액'] = apt_trade_202210_3['거래금액_int'].apply(readNumber)
@@ -810,12 +804,6 @@ def map_trade(df, trade_option,
         if('아파트' in df.columns):
             apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
             apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
-        elif('연립다세대' in df.columns):
-            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['연립다세대']
-        elif('단지' in df.columns):
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['단지']
-            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
         
         apt_trade_202210_3['보증금액_int'] = apt_trade_202210_3['보증금액'].astype(int)
         apt_trade_202210_3['보증금액'] = apt_trade_202210_3['보증금액_int'].apply(readNumber)
@@ -852,12 +840,6 @@ def map_trade(df, trade_option,
         
         if('아파트' in df.columns):
             apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
-            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
-        elif('연립다세대' in df.columns):
-            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['연립다세대']
-        elif('단지' in df.columns):
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['단지']
             apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
         
         apt_trade_202210_3['보증금액_int'] = apt_trade_202210_3['보증금액'].astype(int)
