@@ -692,15 +692,15 @@ def park_geo(park_raw, sig_area):
     return fig
 
 # 각 시군구별 평균 거래 금액 지도로 표현
-def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, year_list, month_list ,type_val, type_option):
+def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, year_option, month_option ,type_val, type_option):
   
     # 타입 별 이름
     type_dic = {'apt':'아파트','offi':'오피스텔'}
     type_nm = type_dic[type_option]
 
     apart_trans2 = apart_trans[apart_trans['시도명'] == sig_area]
-    apart_trans2 = apart_trans2[apart_trans2['년'] == year_list]
-    apart_trans2 = apart_trans2[apart_trans2['월'] == month_list]
+    apart_trans2 = apart_trans2[apart_trans2['년'] == year_option]
+    apart_trans2 = apart_trans2[apart_trans2['월'] == month_option]
     apart_trans3 = apart_trans2[apart_trans2['구분'] == type_val]
     apart_trans4 = apart_trans3[apart_trans2['타입'] == type_option].reset_index(drop = True)
     

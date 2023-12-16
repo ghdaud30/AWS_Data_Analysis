@@ -95,6 +95,30 @@ st.title('AWS 서버를 활용한 부동산 거래 정보')
 st.subheader(f'{sig_area} 아파트 거래 정보 {year_option}년')
 st.markdown("---")
 
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+  amount_value = st.slider(
+      '매매(보증금액), 단위: 만원',
+      0, 1000000, (0, 100000))
+
+with col2:
+  area_value = st.slider(
+      '전용면적',
+      0, 400, (0, 200))
+      
+with col3:
+  year_value = st.slider(
+      '건축년도',
+      1970, 2022, (1970, 2000))
+      
+with col4:
+  floor_value = st.slider(
+      '층',
+      1, 100, (0, 100))
+
+st.markdown("---")
+
 st.sidebar.markdown(
     """
     # Reference
@@ -153,8 +177,8 @@ trade_mean_map = vis_func.trade_mean_map(apart_trans,
                         geo_json,
                         sig_lat_lon,
                         sig_area,
-                        year_list,
-                        month_list,
+                        year_option,
+                        month_option,
                         type_val,
                         type_option)
 
