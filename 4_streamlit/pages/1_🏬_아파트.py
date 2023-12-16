@@ -155,8 +155,9 @@ trade_mean_map = vis_func.trade_mean_map(apart_trans2,
                         type_option)
 
 
-col555 = st.columns(1)
-col555.plotly_chart(trade_mean_map,use_container_width= True)
+col555 = st.columns([1])
+with col555[0]:
+    st.plotly_chart(trade_mean_map, use_container_width=True)
 st.markdown("---")
 
 col, col2 = st.columns([1,1])
