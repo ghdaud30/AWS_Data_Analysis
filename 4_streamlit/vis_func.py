@@ -392,7 +392,6 @@ def school_count_plotly_gender(df_trade, sig_area,school_name):
 
     return(fig)
 
-
 # 2021년 월에 따른 지역별 부동산 실거래가 평균
 def trade_mean_month(total, sig_area, type_val):
     
@@ -691,3 +690,53 @@ def park_geo(park_raw, sig_area):
       )
         
     return fig
+
+# 각 구별 평균 거래 금액 지도로 표현
+def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, type_val, type_option):
+  
+    # 타입 별 이름
+    type_dic = {'apt':'아파트','offi':'오피스텔'}
+    type_nm = type_dic[type_option]
+  
+    apart_trans2 = apart_trans[apart_trans['시도명'] == sig_area]
+    apart_trans3 = apart_trans2[apart_trans2['구분'] == type_val]
+    apart_trans4 = apart_trans3[apart_trans2['타입'] == type_option]
+    
+    sig_lat_lon2 = sig_lat_lon[sig_lat_lon['sig_nm'] == sig_area].reset_index(drop = True)
+    
+    apart_trans4['거래금액_int'] = apart_trans4['거래금액'].astype(int)
+    apart_trans4['거래금액'] = apart_trans4['거래금액_int'].apply(readNumber)
+        
+    fig = px.choropleth_mapbox(apart_trans4, 
+                               geojson=geo_json, 
+                               color="거래금액_int",
+                               color_continuous_scale="Reds",
+                               hover_data={
+                                   "SIG_CD" : False,
+                                   "시도명" : True,
+                                   "시군구명" : True,
+                                   "구분": False,
+                                   "타입": False,
+                                   "거래금액": True,
+                                   "거래금액_int": False
+                               },
+                               locations="SIG_CD", 
+                               featureidkey="properties.SIG_CD",
+                               center={"lat":sig_lat_lon2['long'][0], 
+                                       "lon":sig_lat_lon2['lat'][0]},
+                               mapbox_style="carto-positron",
+                               zoom=9)
+    
+    fig.update_layout(
+      margin={"r":0,"t":50,"l":0,"b":0},
+      title = f'{sig_area} 시군구별 {type_nm} {type_var} 거래금액 지도(202211 기준)',
+      title_font_family="맑은고딕",
+      title_font_size = 18,
+      hoverlabel=dict(
+        bgcolor='white',
+        font_size=15,
+        ),
+        template='plotly_white'
+      )
+      
+    return fig  
