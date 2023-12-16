@@ -45,10 +45,6 @@ def read_file_csv(filename):
 def read_file_json(filename):
   df = conn.read(filename, input_format="json", ttl=600)
   return df
-@st.cache_data(ttl=3600)
-def read_file_geojson(filename):
-  df = conn.read(filename, input_format="geojson", ttl=600)
-  return df
 
 s3 = boto3.resource('s3')
 
@@ -75,7 +71,13 @@ sig_area = st.sidebar.selectbox(
     sig_list
 )
 
-year_list = [2021,2022,2023]
+type_list = ['매매','전세','월세']
+type_val = st.sidebar.selectbox(
+    "거래 타입 선택",
+    type_list
+)
+
+year_list = [2021,2022]
 year_option = st.sidebar.selectbox(
  'year',
  year_list
@@ -88,7 +90,31 @@ month_option = st.sidebar.selectbox(
 )
 
 st.title('AWS 서버를 활용한 부동산 거래 정보') 
-st.subheader(f'{sig_area} 오피스텔 거래 정보(2021년)')
+st.subheader(f'{sig_area} 오피스텔 거래 정보 {year_option}년')
+st.markdown("---")
+
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+  amount_value = st.slider(
+      '매매(보증금액), 단위: 만원',
+      0, 1000000, (0, 100000))
+
+with col2:
+  area_value = st.slider(
+      '전용면적',
+      0, 400, (0, 200))
+      
+with col3:
+  year_value = st.slider(
+      '건축년도',
+      1980, 2022, (1980, 2000))
+      
+with col4:
+  floor_value = st.slider(
+      '층',
+      1, 100, (0, 100))
+
 st.markdown("---")
 
 st.sidebar.markdown(
@@ -103,11 +129,16 @@ st.sidebar.markdown(
 """
 )
 
-# trade_count_df = read_file_csv('apart-bucket/0_data/streamlit_data/trade_count.csv')
+apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
+sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
+
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
-# apart_trans4 = read_file_csv('apart-bucket/0_data/streamlit_data/map_csv.csv')
-# sig_lat_lon = read_file_csv('apart-bucket/0_data/streamlit_data/sig_lat_lon.csv')
-# geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geo_sig_{sig_area}_json.geojson')
+geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
+
+# df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_trade_{year_list}{month_list}.csv')
+# df_rent = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_rent_{year_list}{month_list}.csv')
+# df_trade_2 = df_trade[df_trade['시도명'] == sig_area]
+# df_rent_2 = df_rent[df_rent['시도명'] == sig_area]
 
 
 
@@ -140,6 +171,22 @@ trade_count_month = vis_func.trade_count_month(vis_trade_rent_df,
 trade_count = vis_func.trade_count(vis_trade_rent_df,
                           sig_area,
                           type_option)
+
+# 각 시군구별 평균 거래 금액 지도로 표현
+trade_mean_map = vis_func.trade_mean_map(apart_trans,
+                        geo_json,
+                        sig_lat_lon,
+                        sig_area,
+                        year_option,
+                        month_option,
+                        type_val,
+                        type_option)
+
+
+col555 = st.columns([1])
+with col555[0]:
+    st.plotly_chart(trade_mean_map, use_container_width=True)
+st.markdown("---")
 
 col, col2 = st.columns([1,1])
 col.pyplot(vis_trade_rent, use_container_width = True) 

@@ -110,7 +110,7 @@ with col2:
 with col3:
   year_value = st.slider(
       '건축년도',
-      1970, 2022, (1970, 2000))
+      1980, 2022, (1980, 2000))
       
 with col4:
   floor_value = st.slider(
@@ -137,8 +137,8 @@ sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoserv
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
 
-# df_trade = pd.read_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_trade_{year_list}{month_list}.csv')
-# df_rent = pd.read_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_rent_{year_list}{month_list}.csv')
+# df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_trade_{year_list}{month_list}.csv')
+# df_rent = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_rent_{year_list}{month_list}.csv')
 # df_trade_2 = df_trade[df_trade['시도명'] == sig_area]
 # df_rent_2 = df_rent[df_rent['시도명'] == sig_area]
 
