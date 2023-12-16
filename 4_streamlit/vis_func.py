@@ -729,7 +729,7 @@ def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, type_val, type_
     
     fig.update_layout(
       margin={"r":0,"t":50,"l":0,"b":0},
-      title = f'{sig_area} 시군구별 {type_nm} {type_var} 거래금액 지도(202211 기준)',
+      title = f'{sig_area} 시군구별 {type_nm} {type_val} 거래금액 지도(202211 기준)',
       title_font_family="맑은고딕",
       title_font_size = 18,
       hoverlabel=dict(
@@ -740,3 +740,154 @@ def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, type_val, type_
       )
       
     return fig  
+
+# 각 시도별 거래량 지도로 표현
+def map_trade(df, trade_option,
+              amount_value_0,amount_value_1, 
+              area_value_0, area_value_1, 
+              year_value_0, year_value_1,
+              floor_value_0, floor_value_1):
+    
+    if(trade_option == '매매'):
+        df_trade_202210_2 = df                
+        apt_trade_202210_3 = df_trade_202210_2[
+          (df_trade_202210_2['거래금액'] >= amount_value_0) & 
+          (df_trade_202210_2['거래금액'] <= amount_value_1) &
+          (df_trade_202210_2['전용면적'] >= area_value_0) & 
+          (df_trade_202210_2['전용면적'] <= area_value_1) &
+          (df_trade_202210_2['사용승인일'] >= year_value_0) & 
+          (df_trade_202210_2['사용승인일'] <= year_value_1) & 
+          (df_trade_202210_2['층'] >= floor_value_0) & 
+          (df_trade_202210_2['층'] <= floor_value_1)
+          ]
+        
+        if('아파트' in df.columns):
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
+        elif('연립다세대' in df.columns):
+            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['연립다세대']
+        elif('단지' in df.columns):
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['단지']
+            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+        
+        apt_trade_202210_3['거래금액_int'] = apt_trade_202210_3['거래금액'].astype(int)
+        apt_trade_202210_3['거래금액'] = apt_trade_202210_3['거래금액_int'].apply(readNumber)
+    
+        fig = px.scatter_mapbox(apt_trade_202210_3,
+                                lat="lat",
+                                lon="lon",
+                                hover_data={
+                                  "lat" : False,
+                                  "lon" : False,
+                                  "이름" : True,
+                                  "법정동": True,
+                                  "거래금액": True,
+                                  "거래금액_int": False,
+                                  "전용면적":True,
+                                  },
+                                color = '시군구명',
+                                size = '거래금액_int',
+                                height = 600,
+                                zoom=10)
+        
+    
+    # 전세
+    elif(trade_option == '전세') :
+        df_trade_202210_2 = df[df['월세금액'] == 0]             
+        apt_trade_202210_3 = df_trade_202210_2[
+          (df_trade_202210_2['보증금액'] >= amount_value_0) & 
+          (df_trade_202210_2['보증금액'] <= amount_value_1) &
+          (df_trade_202210_2['전용면적'] >= area_value_0) & 
+          (df_trade_202210_2['전용면적'] <= area_value_1) &
+          (df_trade_202210_2['사용승인일'] >= year_value_0) & 
+          (df_trade_202210_2['사용승인일'] <= year_value_1) & 
+          (df_trade_202210_2['층'] >= floor_value_0) & 
+          (df_trade_202210_2['층'] <= floor_value_1)
+          ]
+        
+        if('아파트' in df.columns):
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
+            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+        elif('연립다세대' in df.columns):
+            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['연립다세대']
+        elif('단지' in df.columns):
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['단지']
+            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+        
+        apt_trade_202210_3['보증금액_int'] = apt_trade_202210_3['보증금액'].astype(int)
+        apt_trade_202210_3['보증금액'] = apt_trade_202210_3['보증금액_int'].apply(readNumber)
+        
+        fig = px.scatter_mapbox(apt_trade_202210_3,
+                                lat="lat",
+                                lon="lon",
+                                hover_data={
+                                  "lat" : False,
+                                  "lon" : False,
+                                  "이름" : True,
+                                  "법정동": True,
+                                  "보증금액": True,
+                                  "보증금액_int": False,
+                                  "전용면적":True,
+                                  },
+                                color = '시군구명',
+                                size = '보증금액_int',
+                                height = 600,
+                                zoom=10)
+        
+    elif(trade_option == '월세') :
+        df_trade_202210_2 = df[df['월세금액'] != 0]             
+        apt_trade_202210_3 = df_trade_202210_2[
+          (df_trade_202210_2['보증금액'] >= amount_value_0) & 
+          (df_trade_202210_2['보증금액'] <= amount_value_1) &            
+          (df_trade_202210_2['전용면적'] >= area_value_0) & 
+          (df_trade_202210_2['전용면적'] <= area_value_1) &
+          (df_trade_202210_2['사용승인일'] >= year_value_0) & 
+          (df_trade_202210_2['사용승인일'] <= year_value_1) & 
+          (df_trade_202210_2['층'] >= floor_value_0) & 
+          (df_trade_202210_2['층'] <= floor_value_1)
+          ]
+        
+        if('아파트' in df.columns):
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
+            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+        elif('연립다세대' in df.columns):
+            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['연립다세대']
+        elif('단지' in df.columns):
+            apt_trade_202210_3['이름'] = apt_trade_202210_3['단지']
+            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+        
+        apt_trade_202210_3['보증금액_int'] = apt_trade_202210_3['보증금액'].astype(int)
+        apt_trade_202210_3['보증금액'] = apt_trade_202210_3['보증금액_int'].apply(readNumber)
+        
+        fig = px.scatter_mapbox(apt_trade_202210_3,
+                                lat="lat",
+                                lon="lon",
+                                hover_data={
+                                  "lat" : False,
+                                  "lon" : False,
+                                  "이름" : True,
+                                  "법정동": True,
+                                  "보증금액": True,
+                                  "보증금액_int": False,
+                                  "전용면적":True,
+                                  },
+                                color = '시군구명',
+                                size = '보증금액_int',
+                                height = 600,
+                                zoom=10)
+        
+    fig.update_layout(
+      mapbox_style="carto-positron",
+      coloraxis_showscale=False,
+      showlegend=False,
+      margin={"r":0,"t":0,"l":0,"b":0},
+      hoverlabel=dict(
+        bgcolor='white',
+        font_size=15,
+        ),
+        template='plotly_white'
+      )
+      
+    return fig
