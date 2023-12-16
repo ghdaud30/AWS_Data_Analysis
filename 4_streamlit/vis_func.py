@@ -691,16 +691,18 @@ def park_geo(park_raw, sig_area):
         
     return fig
 
-# 각 구별 평균 거래 금액 지도로 표현
-def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, type_val, type_option):
+# 각 시군구별 평균 거래 금액 지도로 표현
+def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, year_list, month_list ,type_val, type_option):
   
     # 타입 별 이름
     type_dic = {'apt':'아파트','offi':'오피스텔'}
     type_nm = type_dic[type_option]
-  
+
     apart_trans2 = apart_trans[apart_trans['시도명'] == sig_area]
+    apart_trans2 = apart_trans2[apart_trans['년'] == year_list]
+    apart_trans2 = apart_trans2[apart_trans['월'] == month_list]
     apart_trans3 = apart_trans2[apart_trans2['구분'] == type_val]
-    apart_trans4 = apart_trans3[apart_trans2['타입'] == type_option]
+    apart_trans4 = apart_trans3[apart_trans2['타입'] == type_option].reset_index(drop = True)
     
     sig_lat_lon2 = sig_lat_lon[sig_lat_lon['sig_nm'] == sig_area].reset_index(drop = True)
     
@@ -729,7 +731,7 @@ def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, type_val, type_
     
     fig.update_layout(
       margin={"r":0,"t":50,"l":0,"b":0},
-      title = f'{sig_area} 시군구별 {type_nm} {type_val} 거래금액 지도(202211 기준)',
+      title = f'{sig_area} 시군구별 {type_nm} {type_val} 거래금액 지도({year_list}년 {month_list}월 기준)',
       title_font_family="맑은고딕",
       title_font_size = 18,
       hoverlabel=dict(

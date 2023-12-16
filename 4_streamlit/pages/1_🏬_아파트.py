@@ -108,10 +108,7 @@ st.sidebar.markdown(
 )
 
 apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
-apart_trans2 = apart_trans[apart_trans['시도명'] == sig_area]
-
 sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
-sig_lat_lon2 = sig_lat_lon[sig_lat_lon['sig_nm'] == sig_area].reset_index(drop = True)
 
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
@@ -146,11 +143,13 @@ trade_count = vis_func.trade_count(vis_trade_rent_df,
                         sig_area,
                         type_option)
 
-# 각 구별 평균 거래 금액
-trade_mean_map = vis_func.trade_mean_map(apart_trans2,
+# 각 시군구별 평균 거래 금액 지도로 표현
+trade_mean_map = vis_func.trade_mean_map(apart_trans,
                         geo_json,
-                        sig_lat_lon2,
+                        sig_lat_lon,
                         sig_area,
+                        year_list,
+                        month_list,
                         type_val,
                         type_option)
 
