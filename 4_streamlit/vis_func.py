@@ -889,7 +889,7 @@ def map_trade(df_total, trade_option,
         
     fig.update_layout(
       margin={"r":0,"t":50,"l":0,"b":0},
-      title = f'{sig_area} 시군구별 {type_nm} {type_val} 거래 데이터 지도 ({year_option}년 {month_option}월 기준)',
+      title = f'{sig_area} 시군구별 {type_nm} {type_option} 거래 데이터 지도 ({year_option}년 {month_option}월 기준)',
       title_font_family="맑은고딕",
       title_font_size = 18,
       mapbox_style="carto-positron",
