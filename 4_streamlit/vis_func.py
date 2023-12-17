@@ -679,7 +679,6 @@ def park_geo(park_raw, sig_area):
                             lat="위도",
                             lon="경도",
                             color="공원구분",
-                            size='공원면적',
                             hover_data={
                                 "위도" : False,
                                 "경도" : False,
