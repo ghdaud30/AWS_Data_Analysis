@@ -412,6 +412,12 @@ def trade_mean_month(total, sig_area, type_val):
     # 데이터 다시 합쳐주기
     combined_df = pd.concat([df_trade,df_year,df_month])
     
+    # '거래날짜' 열을 날짜 형식으로 변환
+    combined_df['거래날짜'] = pd.to_datetime(combined_df['거래날짜'])
+
+    # '거래날짜'를 기준으로 데이터 정렬
+    combined_df = combined_df.sort_values(by='거래날짜')
+    
     # 막대 그래프 그리기
     fig, ax = plt.subplots(figsize=(16, 10))
     sns.lineplot(x='거래날짜', y='mean', hue='구분', style = '구분',
@@ -525,6 +531,12 @@ def trade_count_month(total, sig_area, type_val):
     
     # 데이터 다시 합쳐주기
     combined_df = pd.concat([df_trade,df_year,df_month])
+    
+    # '거래날짜' 열을 날짜 형식으로 변환
+    combined_df['거래날짜'] = pd.to_datetime(combined_df['거래날짜'])
+
+    # '거래날짜'를 기준으로 데이터 정렬
+    combined_df = combined_df.sort_values(by='거래날짜')
     
     # 막대 그래프 그리기
     fig, ax = plt.subplots(figsize=(16, 10))
@@ -744,32 +756,32 @@ def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, year_option, mo
     return fig  
 
 # 각 시도별 거래량 지도로 표현
-def map_trade(df, trade_option,
+def map_trade(df_total, trade_option,
               amount_value_0,amount_value_1, 
               area_value_0, area_value_1, 
               year_value_0, year_value_1,
               floor_value_0, floor_value_1):
     
     if(trade_option == '매매'):
-        df_trade_202210_2 = df                
-        apt_trade_202210_3 = df_trade_202210_2[
-          (df_trade_202210_2['거래금액'] >= amount_value_0) & 
-          (df_trade_202210_2['거래금액'] <= amount_value_1) &
-          (df_trade_202210_2['전용면적'] >= area_value_0) & 
-          (df_trade_202210_2['전용면적'] <= area_value_1) &
-          (df_trade_202210_2['건축년도'] >= year_value_0) & 
-          (df_trade_202210_2['건축년도'] <= year_value_1) & 
-          (df_trade_202210_2['층'] >= floor_value_0) & 
-          (df_trade_202210_2['층'] <= floor_value_1)
+             
+        df_total_2 = df_total[
+          (df_total['거래금액'] >= amount_value_0) & 
+          (df_total['거래금액'] <= amount_value_1) &
+          (df_total['전용면적'] >= area_value_0) & 
+          (df_total['전용면적'] <= area_value_1) &
+          (df_total['건축년도'] >= year_value_0) & 
+          (df_total['건축년도'] <= year_value_1) & 
+          (df_total['층'] >= floor_value_0) & 
+          (df_total['층'] <= floor_value_1)
           ]
         
-        if('아파트' in df.columns):
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
+        if('아파트' in df_total.columns):
+            df_total_2['이름'] = df_total_2['아파트']
         
-        apt_trade_202210_3['거래금액_int'] = apt_trade_202210_3['거래금액'].astype(int)
-        apt_trade_202210_3['거래금액'] = apt_trade_202210_3['거래금액_int'].apply(readNumber)
-    
-        fig = px.scatter_mapbox(apt_trade_202210_3,
+        df_total_2['거래금액_int'] = df_total_2['거래금액'].astype(int)
+        df_total_2['거래금액'] = df_total_2['거래금액_int'].apply(readNumber)
+        
+        fig = px.scatter_mapbox(df_total_2,
                                 lat="lat",
                                 lon="lon",
                                 hover_data={
@@ -784,31 +796,30 @@ def map_trade(df, trade_option,
                                 color = '시군구명',
                                 size = '거래금액_int',
                                 height = 600,
-                                zoom=10)
+                                zoom=12.5)
         
-    
     # 전세
     elif(trade_option == '전세') :
-        df_trade_202210_2 = df[df['월세금액'] == 0]             
-        apt_trade_202210_3 = df_trade_202210_2[
-          (df_trade_202210_2['보증금액'] >= amount_value_0) & 
-          (df_trade_202210_2['보증금액'] <= amount_value_1) &
-          (df_trade_202210_2['전용면적'] >= area_value_0) & 
-          (df_trade_202210_2['전용면적'] <= area_value_1) &
-          (df_trade_202210_2['사용승인일'] >= year_value_0) & 
-          (df_trade_202210_2['사용승인일'] <= year_value_1) & 
-          (df_trade_202210_2['층'] >= floor_value_0) & 
-          (df_trade_202210_2['층'] <= floor_value_1)
+        df_total_2 = df_total[df_total['월세금액'] == 0]             
+        df_total_3 = df_total_2[
+          (df_total_2['보증금액'] >= amount_value_0) & 
+          (df_total_2['보증금액'] <= amount_value_1) &
+          (df_total_2['전용면적'] >= area_value_0) & 
+          (df_total_2['전용면적'] <= area_value_1) &
+          (df_total_2['건축년도'] >= year_value_0) & 
+          (df_total_2['건축년도'] <= year_value_1) & 
+          (df_total_2['층'] >= floor_value_0) & 
+          (df_total_2['층'] <= floor_value_1)
           ]
         
-        if('아파트' in df.columns):
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
-            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+        if('아파트' in df_total.columns):
+            df_total_3['이름'] = df_total_3['아파트']
+            df_total_3['법정동'] = df_total_3['동리명']
         
-        apt_trade_202210_3['보증금액_int'] = apt_trade_202210_3['보증금액'].astype(int)
-        apt_trade_202210_3['보증금액'] = apt_trade_202210_3['보증금액_int'].apply(readNumber)
+        df_total_3['보증금액_int'] = df_total_3['보증금액'].astype(int)
+        df_total_3['보증금액'] = df_total_3['보증금액_int'].apply(readNumber)
         
-        fig = px.scatter_mapbox(apt_trade_202210_3,
+        fig = px.scatter_mapbox(df_total_3,
                                 lat="lat",
                                 lon="lon",
                                 hover_data={
@@ -823,29 +834,29 @@ def map_trade(df, trade_option,
                                 color = '시군구명',
                                 size = '보증금액_int',
                                 height = 600,
-                                zoom=10)
+                                zoom=12.5)
         
     elif(trade_option == '월세') :
-        df_trade_202210_2 = df[df['월세금액'] != 0]             
-        apt_trade_202210_3 = df_trade_202210_2[
-          (df_trade_202210_2['보증금액'] >= amount_value_0) & 
-          (df_trade_202210_2['보증금액'] <= amount_value_1) &            
-          (df_trade_202210_2['전용면적'] >= area_value_0) & 
-          (df_trade_202210_2['전용면적'] <= area_value_1) &
-          (df_trade_202210_2['사용승인일'] >= year_value_0) & 
-          (df_trade_202210_2['사용승인일'] <= year_value_1) & 
-          (df_trade_202210_2['층'] >= floor_value_0) & 
-          (df_trade_202210_2['층'] <= floor_value_1)
+        df_total_2 = df_total[df_total['월세금액'] != 0]             
+        df_total_3 = df_total_2[
+          (df_total_2['보증금액'] >= amount_value_0) & 
+          (df_total_2['보증금액'] <= amount_value_1) &            
+          (df_total_2['전용면적'] >= area_value_0) & 
+          (df_total_2['전용면적'] <= area_value_1) &
+          (df_total_2['건축년도'] >= year_value_0) & 
+          (df_total_2['건축년도'] <= year_value_1) & 
+          (df_total_2['층'] >= floor_value_0) & 
+          (df_total_2['층'] <= floor_value_1)
           ]
         
-        if('아파트' in df.columns):
-            apt_trade_202210_3['이름'] = apt_trade_202210_3['아파트']
-            apt_trade_202210_3['법정동'] = apt_trade_202210_3['동리명']
+        if('아파트' in df_total.columns):
+            df_total_3['이름'] = df_total_3['아파트']
+            df_total_3['법정동'] = df_total_3['동리명']
         
-        apt_trade_202210_3['보증금액_int'] = apt_trade_202210_3['보증금액'].astype(int)
-        apt_trade_202210_3['보증금액'] = apt_trade_202210_3['보증금액_int'].apply(readNumber)
+        df_total_3['보증금액_int'] = df_total_3['보증금액'].astype(int)
+        df_total_3['보증금액'] = df_total_3['보증금액_int'].apply(readNumber)
         
-        fig = px.scatter_mapbox(apt_trade_202210_3,
+        fig = px.scatter_mapbox(df_total_3,
                                 lat="lat",
                                 lon="lon",
                                 hover_data={
@@ -860,7 +871,7 @@ def map_trade(df, trade_option,
                                 color = '시군구명',
                                 size = '보증금액_int',
                                 height = 600,
-                                zoom=10)
+                                zoom=12.5)
         
     fig.update_layout(
       mapbox_style="carto-positron",
