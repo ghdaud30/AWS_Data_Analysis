@@ -99,7 +99,7 @@ selected_month_index = month_option - 1  # 선택한 월의 인덱스를 가져�
 selected_month_str = month_list_str[selected_month_index]  # month_list_str에서 해당 월의 문자열 값을 가져옵니다
 
 st.title('AWS 서버를 활용한 부동산 거래 정보') 
-st.subheader(f'{sig_area} 오피스텔 거래 정보 {year_option}년')
+st.subheader(f'{sig_area} 오피스텔 거래 정보 ({year_option}년 {month_option}월 기준)')
 st.markdown("---")
 
 col1, col2, col3, col4 = st.columns(4)
@@ -117,7 +117,7 @@ with col2:
 with col3:
   year_value = st.slider(
       '건축년도',
-      1980, 2022, (1980, 2022))
+      1980, 2022, (1980, 2000))
       
 with col4:
   floor_value = st.slider(
@@ -148,6 +148,7 @@ df_lat_lon = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/df_lat_
 
 df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_trade/{type_option}_trade_{selected_year_str}{selected_month_str}.csv')
 df_rent = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_rent/{type_option}_rent_{selected_year_str}{selected_month_str}.csv')
+
 df_trade_2 = df_trade[df_trade['시도명'] == sig_area]
 df_rent_2 = df_rent[df_rent['시도명'] == sig_area]
 

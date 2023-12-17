@@ -101,7 +101,7 @@ selected_month_index = month_option - 1  # 선택한 월의 인덱스를 가져�
 selected_month_str = month_list_str[selected_month_index]  # month_list_str에서 해당 월의 문자열 값을 가져옵니다
 
 st.title('AWS 서버를 활용한 부동산 거래 정보') 
-st.subheader(f'{sig_area} 아파트 거래 정보 {year_option}년 {month_option}월')
+st.subheader(f'{sig_area} 아파트 거래 정보 ({year_option}년 {month_option}월 기준)')
 st.markdown("---")
 
 col1, col2, col3, col4 = st.columns(4)
@@ -119,7 +119,7 @@ with col2:
 with col3:
   year_value = st.slider(
       '건축년도',
-      1980, 2022, (1980, 2022))
+      1980, 2022, (1980, 2000))
       
 with col4:
   floor_value = st.slider(
