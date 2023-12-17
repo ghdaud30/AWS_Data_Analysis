@@ -769,7 +769,8 @@ def map_trade(df_total, trade_option,
     type_nm = type_dic[type_option]
     
     if(trade_option == '매매'):
-             
+        df_total['건축년도'] = df_total['건축년도'].astype(int)  
+           
         df_total_2 = df_total[
           (df_total['거래금액'] >= amount_value_0) & 
           (df_total['거래금액'] <= amount_value_1) &
@@ -780,7 +781,6 @@ def map_trade(df_total, trade_option,
           (df_total['층'] >= floor_value_0) & 
           (df_total['층'] <= floor_value_1)
           ]
-        
         df_total_2['거래금액_int'] = df_total_2['거래금액'].astype(int)
         df_total_2['거래금액'] = df_total_2['거래금액_int'].apply(readNumber)
         
@@ -823,6 +823,7 @@ def map_trade(df_total, trade_option,
         
     # 전세
     elif(trade_option == '전세') :
+        df_total['건축년도'] = df_total['건축년도'].astype(int)
         
         if('아파트' in df_total.columns):
             df_total = df_total[df_total['월세금액'] == 0]   
@@ -898,6 +899,7 @@ def map_trade(df_total, trade_option,
                                 zoom=10)           
         
     elif(trade_option == '월세') :
+        df_total['건축년도'] = df_total['건축년도'].astype(int)
         
         if('아파트' in df_total.columns):
             df_total = df_total[df_total['월세금액'] != 0]   
