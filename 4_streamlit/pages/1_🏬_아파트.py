@@ -109,7 +109,7 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
   amount_value = st.slider(
       '보증금액, 단위: 만원',
-      0, 1000000, (0, 100000))
+      0, 1000000, (0, 10000000))
 
 with col2:
   area_value = st.slider(

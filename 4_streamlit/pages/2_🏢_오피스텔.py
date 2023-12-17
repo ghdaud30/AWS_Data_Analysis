@@ -79,15 +79,24 @@ type_val = st.sidebar.selectbox(
 
 year_list = [2021,2022]
 year_option = st.sidebar.selectbox(
- 'year',
+ '년도',
  year_list
 )
 
+year_list_str = ['2021','2022']
+selected_year_index = year_list.index(year_option)  # 선택한 연도의 인덱스를 가져옵니다
+selected_year_str = year_list_str[selected_year_index]  # year_list_str에서 해당 연도의 문자열 값을 가져옵니다
+
 month_list = range(1,13)
 month_option = st.sidebar.selectbox(
- 'month',
+ '월',
  month_list
 )
+
+month_list_str = ['01','02','03','04','05','06',
+                  '07','08','09','10','11','12']
+selected_month_index = month_option - 1  # 선택한 월의 인덱스를 가져옵니다 (0부터 시작하므로 -1)
+selected_month_str = month_list_str[selected_month_index]  # month_list_str에서 해당 월의 문자열 값을 가져옵니다
 
 st.title('AWS 서버를 활용한 부동산 거래 정보') 
 st.subheader(f'{sig_area} 오피스텔 거래 정보 {year_option}년')
@@ -98,7 +107,7 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
   amount_value = st.slider(
       '매매(보증금액), 단위: 만원',
-      0, 1000000, (0, 100000))
+      0, 1000000, (0, 1000000))
 
 with col2:
   area_value = st.slider(
@@ -129,17 +138,31 @@ st.sidebar.markdown(
 """
 )
 
+legal_info_b = read_file_csv('real-estate555-bucket/0_data/streamlit_data/legal_info_b.csv')
+
 apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
 sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
 
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
 
-# df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_trade_{year_list}{month_list}.csv')
-# df_rent = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_rent_{year_list}{month_list}.csv')
-# df_trade_2 = df_trade[df_trade['시도명'] == sig_area]
-# df_rent_2 = df_rent[df_rent['시도명'] == sig_area]
+df_lat_lon = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/df_lat_lon.csv')
 
+df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_trade/{type_option}_trade_{selected_year_str}{selected_month_str}.csv')
+df_rent = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_rent/{type_option}_rent_{selected_year_str}{selected_month_str}.csv')
+df_trade_2 = df_trade[df_trade['시도명'] == sig_area]
+df_rent_2 = df_rent[df_rent['시도명'] == sig_area]
+
+df_trade_3 = pd.merge(df_trade_2,legal_info_b,
+                    on = ['법정동코드','시도명','시군구명','동리명'],
+                    how = 'left')
+
+df_trade_4 = pd.merge(df_trade_3,df_lat_lon,
+                      on = '주소',
+                      how = 'left')
+df_rent_3 = pd.merge(df_rent_2,df_lat_lon,
+                      on = '주소',
+                      how = 'left')
 
 
 # 막대그래프 seaborn
@@ -182,6 +205,48 @@ trade_mean_map = vis_func.trade_mean_map(apart_trans,
                         type_val,
                         type_option)
 
+# 각 시도별 거래량 지도로 표현
+if type_val == '매매':
+    map_trade = vis_func.map_trade(df_trade_4,
+                              type_val,
+                              amount_value[0],
+                              amount_value[1],
+                              area_value[0],
+                              area_value[1],
+                              year_value[0],
+                              year_value[1],
+                              floor_value[0],
+                              floor_value[1])
+    st.plotly_chart(map_trade, use_container_width = True)
+    st.markdown("---")
+    
+if type_val == '전세':
+    map_trade = vis_func.map_trade(df_rent_3,
+                              type_val,
+                              amount_value[0],
+                              amount_value[1],
+                              area_value[0],
+                              area_value[1],
+                              year_value[0],
+                              year_value[1],
+                              floor_value[0],
+                              floor_value[1])
+    st.plotly_chart(map_trade, use_container_width = True)
+    st.markdown("---")
+    
+if type_val == '월세':
+    map_trade = vis_func.map_trade(df_rent_3,
+                              type_val,
+                              amount_value[0],
+                              amount_value[1],
+                              area_value[0],
+                              area_value[1],
+                              year_value[0],
+                              year_value[1],
+                              floor_value[0],
+                              floor_value[1])
+    st.plotly_chart(map_trade, use_container_width = True)
+    st.markdown("---")
 
 col555 = st.columns([1])
 with col555[0]:
