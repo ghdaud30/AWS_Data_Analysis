@@ -895,7 +895,6 @@ def map_trade(df_total, trade_option,
       mapbox_style="carto-positron",
       coloraxis_showscale=False,
       showlegend=False,
-      margin={"r":0,"t":0,"l":0,"b":0},
       hoverlabel=dict(
         bgcolor='white',
         font_size=15,
