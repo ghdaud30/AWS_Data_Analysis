@@ -107,7 +107,7 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
   amount_value = st.slider(
       '보증금액, 단위: 만원',
-      0, 500000, (0, 500000))
+      0, 500000, (0, 250000))
 
 with col2:
   area_value = st.slider(
@@ -122,7 +122,7 @@ with col3:
 with col4:
   floor_value = st.slider(
       '층',
-      1, 100, (0, 100))
+      1, 100, (0, 50))
 
 st.markdown("---")
 

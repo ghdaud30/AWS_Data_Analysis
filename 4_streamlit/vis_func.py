@@ -495,7 +495,7 @@ def trade_mean(df_trade, sig_area, type_val):
     fig.update_traces(mode='lines+markers')
 
     fig.update_layout(
-        title= f'{sig_area} {type_nm} 매매(실거래가)/전월세(보증금) 평균 <br><sup>단위(만원)</sup>',
+        title= f'{sig_area} {type_nm} 매매(실거래가)/전월세(보증금) 평균값 <br><sup>단위(만원)</sup>',
       title_font_family="맑은고딕",
       title_font_size = 18,
       hoverlabel=dict(
