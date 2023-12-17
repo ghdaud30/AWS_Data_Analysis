@@ -685,7 +685,8 @@ def park_geo(park_raw, sig_area):
                               "공원명" : True,
                               "공원구분": True,
                               "소재지도로명주소": True,
-                                "관리기관명" : True
+                                "관리기관명" : True,
+                                "전화번호" : True
                               },
                             zoom = 10,
                             title = f'{sig_area} 시군구별 도시 공원 위치',
