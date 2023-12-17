@@ -796,7 +796,7 @@ def map_trade(df_total, trade_option,
                                 color = '시군구명',
                                 size = '거래금액_int',
                                 height = 600,
-                                zoom=12.5)
+                                zoom=9)
         
     # 전세
     elif(trade_option == '전세') :
@@ -834,7 +834,7 @@ def map_trade(df_total, trade_option,
                                 color = '시군구명',
                                 size = '보증금액_int',
                                 height = 600,
-                                zoom=12.5)
+                                zoom=9)
         
     elif(trade_option == '월세') :
         df_total_2 = df_total[df_total['월세금액'] != 0]             
@@ -871,7 +871,7 @@ def map_trade(df_total, trade_option,
                                 color = '시군구명',
                                 size = '보증금액_int',
                                 height = 600,
-                                zoom=12.5)
+                                zoom=9)
         
     fig.update_layout(
       mapbox_style="carto-positron",
