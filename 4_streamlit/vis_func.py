@@ -761,12 +761,12 @@ def map_trade(df_total, trade_option,
               area_value_0, area_value_1, 
               year_value_0, year_value_1,
               floor_value_0, floor_value_1,
-              sig_area, type_val,
+              sig_area, type_option,
               year_option, month_option):
     
     # 타입 별 이름
     type_dic = {'apt':'아파트','offi':'오피스텔'}
-    type_nm = type_dic[type_val]
+    type_nm = type_dic[type_option]
     
     if(trade_option == '매매'):
         
