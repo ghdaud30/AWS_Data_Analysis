@@ -768,8 +768,15 @@ def map_trade(df_total, trade_option,
     type_dic = {'apt':'아파트','offi':'오피스텔'}
     type_nm = type_dic[type_option]
     
+     # '건축년도' 열(column)의 '없음' 값을 NaN(누락된 값)으로 대체
+    df_total['건축년도'] = pd.to_numeric(df_total['건축년도'], errors='coerce')
+    # NaN 값이 있는 행 제거
+    df_total.dropna(subset=['건축년도'], inplace=True)
+    # '건축년도' 열(column)의 데이터 타입을 정수형(int)으로 변경
+    df_total['건축년도'] = df_total['건축년도'].astype('int')
+    
+    
     if(trade_option == '매매'):
-        df_total['건축년도'] = df_total['건축년도'].astype(int)  
            
         df_total_2 = df_total[
           (df_total['거래금액'] >= amount_value_0) & 
@@ -823,7 +830,6 @@ def map_trade(df_total, trade_option,
         
     # 전세
     elif(trade_option == '전세') :
-        df_total['건축년도'] = df_total['건축년도'].astype(int)
         
         if('아파트' in df_total.columns):
             df_total = df_total[df_total['월세금액'] == 0]   
@@ -899,7 +905,6 @@ def map_trade(df_total, trade_option,
                                 zoom=10)           
         
     elif(trade_option == '월세') :
-        df_total['건축년도'] = df_total['건축년도'].astype(int)
         
         if('아파트' in df_total.columns):
             df_total = df_total[df_total['월세금액'] != 0]   
