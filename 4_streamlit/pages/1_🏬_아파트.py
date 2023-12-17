@@ -146,10 +146,10 @@ sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoserv
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
 
-df_lat_lon = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/df_lat_lon.csv')
+df_lat_lon = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/df_lat_lon.csv')
 
-df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_trade/{type_option}_trade_{selected_year_str}{selected_month_str}.csv')
-df_rent = read_file_csv(f'real-estate555-bucket/0_data/streamlit_csv/{type_option}_rent/{type_option}_rent_{selected_year_str}{selected_month_str}.csv')
+df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_trade/{type_option}_trade_{selected_year_str}{selected_month_str}.csv')
+df_rent = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_rent/{type_option}_rent_{selected_year_str}{selected_month_str}.csv')
 df_trade_2 = df_trade[df_trade['시도명'] == sig_area]
 df_rent_2 = df_rent[df_rent['시도명'] == sig_area]
 
