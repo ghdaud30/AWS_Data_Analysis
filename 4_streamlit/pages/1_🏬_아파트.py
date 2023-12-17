@@ -210,7 +210,7 @@ trade_mean_map = vis_func.trade_mean_map(apart_trans,
 
 # 각 시도별 거래량 지도로 표현
 if type_val == '매매':
-    map_trade = vis_func.map_trade(df_trade_3,
+    map_trade = vis_func.map_trade(df_trade_4,
                               type_val,
                               amount_value[0],
                               amount_value[1],
