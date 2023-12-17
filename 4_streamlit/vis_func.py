@@ -769,11 +769,7 @@ def map_trade(df_total, trade_option,
     type_nm = type_dic[type_option]
     
     if(trade_option == '매매'):
-        
-        df_total['건축년도'] = pd.to_numeric(df_total['건축년도'], errors='coerce')
-        df_total.dropna(subset=['건축년도'], inplace=True)
-        df_total['건축년도'] = df_total['건축년도'].astype('int64')
-           
+             
         df_total_2 = df_total[
           (df_total['거래금액'] >= amount_value_0) & 
           (df_total['거래금액'] <= amount_value_1) &
@@ -785,114 +781,194 @@ def map_trade(df_total, trade_option,
           (df_total['층'] <= floor_value_1)
           ]
         
-        if('아파트' in df_total.columns):
-            df_total_2['이름'] = df_total_2['아파트']
-        
         df_total_2['거래금액_int'] = df_total_2['거래금액'].astype(int)
         df_total_2['거래금액'] = df_total_2['거래금액_int'].apply(readNumber)
         
-        fig = px.scatter_mapbox(df_total_2,
-                                lat="lat",
-                                lon="lon",
-                                hover_data={
-                                  "lat" : False,
-                                  "lon" : False,
-                                  "이름" : True,
-                                  "법정동": True,
-                                  '건축년도': True,
-                                  "거래금액": True,
-                                  "거래금액_int": False,
-                                  "전용면적":True,
-                                  },
-                                color = '시군구명',
-                                size = '거래금액_int',
-                                height = 600,
-                                zoom=10)
+        if('아파트' in df_total.columns):
+            df_total_2['이름'] = df_total_2['아파트']
+            fig = px.scatter_mapbox(df_total_2,
+                                    lat="lat",
+                                    lon="lon",
+                                    hover_data={
+                                      "lat" : False,
+                                      "lon" : False,
+                                      "이름" : True,
+                                      "법정동": True,
+                                      "거래금액": True,
+                                      "거래금액_int": False,
+                                      "전용면적":True,
+                                      },
+                                    color = '시군구명',
+                                    size = '거래금액_int',
+                                    height = 600,
+                                    zoom=10)
+        else:
+            df_total_2['법정동'] = df_total_2['동리명']
+            fig = px.scatter_mapbox(df_total_2,
+                                    lat="lat",
+                                    lon="lon",
+                                    hover_data={
+                                      "lat" : False,
+                                      "lon" : False,
+                                      "단지" : True,
+                                      "동리명": True,
+                                      "거래금액": True,
+                                      "거래금액_int": False,
+                                      "전용면적":True,
+                                      },
+                                    color = '시군구명',
+                                    size = '거래금액_int',
+                                    height = 600,
+                                    zoom=10)            
         
     # 전세
     elif(trade_option == '전세') :
-      
-        df_total['건축년도'] = pd.to_numeric(df_total['건축년도'], errors='coerce')
-        df_total.dropna(subset=['건축년도'], inplace=True)
-        df_total['건축년도'] = df_total['건축년도'].astype('int64')   
-      
-        df_total_2 = df_total[df_total['월세금액'] == 0]             
-        df_total_3 = df_total_2[
-          (df_total_2['보증금액'] >= amount_value_0) & 
-          (df_total_2['보증금액'] <= amount_value_1) &
-          (df_total_2['전용면적'] >= area_value_0) & 
-          (df_total_2['전용면적'] <= area_value_1) &
-          (df_total_2['건축년도'] >= year_value_0) & 
-          (df_total_2['건축년도'] <= year_value_1) & 
-          (df_total_2['층'] >= floor_value_0) & 
-          (df_total_2['층'] <= floor_value_1)
-          ]
         
         if('아파트' in df_total.columns):
-            df_total_3['이름'] = df_total_3['아파트']
-            df_total_3['법정동'] = df_total_3['동리명']
+            df_total = df_total[df_total['월세금액'] == 0]   
+            
+            df_total_2 = df_total[
+              (df_total['보증금액'] >= amount_value_0) & 
+              (df_total['보증금액'] <= amount_value_1) &
+              (df_total['전용면적'] >= area_value_0) & 
+              (df_total['전용면적'] <= area_value_1) &
+              (df_total['건축년도'] >= year_value_0) & 
+              (df_total['건축년도'] <= year_value_1) & 
+              (df_total['층'] >= floor_value_0) & 
+              (df_total['층'] <= floor_value_1)
+              ]
+
+            df_total_2['보증금액_int'] = df_total_2['보증금액'].astype(int)
+            df_total_2['보증금액'] = df_total_2['보증금액_int'].apply(readNumber)            
+            
+            df_total_2['이름'] = df_total_2['아파트']
+            df_total_2['법정동'] = df_total_2['동리명']
         
-        df_total_3['보증금액_int'] = df_total_3['보증금액'].astype(int)
-        df_total_3['보증금액'] = df_total_3['보증금액_int'].apply(readNumber)
-        
-        fig = px.scatter_mapbox(df_total_3,
+            fig = px.scatter_mapbox(df_total_2,
+                                    lat="lat",
+                                    lon="lon",
+                                    hover_data={
+                                      "lat" : False,
+                                      "lon" : False,
+                                      "이름" : True,
+                                      "법정동": True,
+                                      '건축년도': True,
+                                      "보증금액": True,
+                                      "보증금액_int": False,
+                                      "전용면적":True,
+                                      },
+                                    color = '시군구명',
+                                    size = '보증금액_int',
+                                    height = 600,
+                                    zoom=10)
+        else:     
+            df_total = df_total[df_total['월세'] == 0]   
+            
+            df_total_2 = df_total[
+              (df_total['보증금'] >= amount_value_0) & 
+              (df_total['보증금'] <= amount_value_1) &
+              (df_total['전용면적'] >= area_value_0) & 
+              (df_total['전용면적'] <= area_value_1) &
+              (df_total['건축년도'] >= year_value_0) & 
+              (df_total['건축년도'] <= year_value_1) & 
+              (df_total['층'] >= floor_value_0) & 
+              (df_total['층'] <= floor_value_1)
+              ]
+
+            df_total_2['보증금_int'] = df_total_2['보증금'].astype(int)
+            df_total_2['보증금'] = df_total_2['보증금_int'].apply(readNumber)
+            
+            df_total_2['법정동'] = df_total_2['동리명']
+            fig = px.scatter_mapbox(df_total_2,
                                 lat="lat",
                                 lon="lon",
                                 hover_data={
                                   "lat" : False,
                                   "lon" : False,
-                                  "이름" : True,
+                                  "단지" : True,
                                   "법정동": True,
                                   '건축년도': True,
-                                  "보증금액": True,
-                                  "보증금액_int": False,
+                                  "보증금": True,
+                                  "보증금_int": False,
                                   "전용면적":True,
                                   },
                                 color = '시군구명',
-                                size = '보증금액_int',
+                                size = '보증금_int',
                                 height = 600,
-                                zoom=10)
+                                zoom=10)           
         
     elif(trade_option == '월세') :
-      
-        df_total['건축년도'] = pd.to_numeric(df_total['건축년도'], errors='coerce')
-        df_total.dropna(subset=['건축년도'], inplace=True)
-        df_total['건축년도'] = df_total['건축년도'].astype('int64')
-      
-        df_total_2 = df_total[df_total['월세금액'] != 0]             
-        df_total_3 = df_total_2[
-          (df_total_2['보증금액'] >= amount_value_0) & 
-          (df_total_2['보증금액'] <= amount_value_1) &            
-          (df_total_2['전용면적'] >= area_value_0) & 
-          (df_total_2['전용면적'] <= area_value_1) &
-          (df_total_2['건축년도'] >= year_value_0) & 
-          (df_total_2['건축년도'] <= year_value_1) & 
-          (df_total_2['층'] >= floor_value_0) & 
-          (df_total_2['층'] <= floor_value_1)
-          ]
         
         if('아파트' in df_total.columns):
-            df_total_3['이름'] = df_total_3['아파트']
-            df_total_3['법정동'] = df_total_3['동리명']
+            df_total = df_total[df_total['월세금액'] != 0]   
+            
+            df_total_2 = df_total[
+              (df_total['보증금액'] >= amount_value_0) & 
+              (df_total['보증금액'] <= amount_value_1) &
+              (df_total['전용면적'] >= area_value_0) & 
+              (df_total['전용면적'] <= area_value_1) &
+              (df_total['건축년도'] >= year_value_0) & 
+              (df_total['건축년도'] <= year_value_1) & 
+              (df_total['층'] >= floor_value_0) & 
+              (df_total['층'] <= floor_value_1)
+              ]
+
+            df_total_2['보증금액_int'] = df_total_2['보증금액'].astype(int)
+            df_total_2['보증금액'] = df_total_2['보증금액_int'].apply(readNumber)              
+            
+            df_total_2['이름'] = df_total_2['아파트']
+            df_total_2['법정동'] = df_total_2['동리명']
         
-        df_total_3['보증금액_int'] = df_total_3['보증금액'].astype(int)
-        df_total_3['보증금액'] = df_total_3['보증금액_int'].apply(readNumber)
-        
-        fig = px.scatter_mapbox(df_total_3,
+            fig = px.scatter_mapbox(df_total_2,
+                                    lat="lat",
+                                    lon="lon",
+                                    hover_data={
+                                      "lat" : False,
+                                      "lon" : False,
+                                      "이름" : True,
+                                      "법정동": True,
+                                      '건축년도': True,
+                                      "보증금액": True,
+                                      "보증금액_int": False,
+                                      "전용면적":True,
+                                      },
+                                    color = '시군구명',
+                                    size = '보증금액_int',
+                                    height = 600,
+                                    zoom=10)
+        else:
+            df_total = df_total[df_total['월세'] != 0]   
+            
+            df_total_2 = df_total[
+              (df_total['보증금'] >= amount_value_0) & 
+              (df_total['보증금'] <= amount_value_1) &
+              (df_total['전용면적'] >= area_value_0) & 
+              (df_total['전용면적'] <= area_value_1) &
+              (df_total['건축년도'] >= year_value_0) & 
+              (df_total['건축년도'] <= year_value_1) & 
+              (df_total['층'] >= floor_value_0) & 
+              (df_total['층'] <= floor_value_1)
+              ]
+
+            df_total_2['보증금_int'] = df_total_2['보증금'].astype(int)
+            df_total_2['보증금'] = df_total_2['보증금_int'].apply(readNumber)
+            
+            df_total_2['법정동'] = df_total_2['동리명']
+            fig = px.scatter_mapbox(df_total_2,
                                 lat="lat",
                                 lon="lon",
                                 hover_data={
                                   "lat" : False,
                                   "lon" : False,
-                                  "이름" : True,
+                                  "단지" : True,
                                   "법정동": True,
                                   '건축년도': True,
-                                  "보증금액": True,
-                                  "보증금액_int": False,
+                                  "보증금": True,
+                                  "보증금_int": False,
                                   "전용면적":True,
                                   },
                                 color = '시군구명',
-                                size = '보증금액_int',
+                                size = '보증금_int',
                                 height = 600,
                                 zoom=10)
         

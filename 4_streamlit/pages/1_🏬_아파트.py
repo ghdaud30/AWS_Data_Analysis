@@ -109,17 +109,17 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
   amount_value = st.slider(
       '보증금액, 단위: 만원',
-      0, 1000000, (0, 10000000))
+      0, 500000, (0, 500000))
 
 with col2:
   area_value = st.slider(
       '전용면적',
-      0, 400, (0, 200))
+      0, 300, (0, 150))
       
 with col3:
   year_value = st.slider(
       '건축년도',
-      1980, 2022, (1980, 2000))
+      1980, 2022, (1980, 2022))
       
 with col4:
   floor_value = st.slider(
