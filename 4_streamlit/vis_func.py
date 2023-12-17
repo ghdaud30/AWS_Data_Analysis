@@ -770,7 +770,9 @@ def map_trade(df_total, trade_option,
     
     if(trade_option == '매매'):
         
-        df_total['건축년도'] = df_total['건축년도'].astype(int)
+        df_total['건축년도'] = pd.to_numeric(df_total['건축년도'], errors='coerce')
+        df_total.dropna(subset=['건축년도'], inplace=True)
+        df_total['건축년도'] = df_total['건축년도'].astype('int64')
            
         df_total_2 = df_total[
           (df_total['거래금액'] >= amount_value_0) & 
@@ -797,6 +799,7 @@ def map_trade(df_total, trade_option,
                                   "lon" : False,
                                   "이름" : True,
                                   "법정동": True,
+                                  '건축년도': True,
                                   "거래금액": True,
                                   "거래금액_int": False,
                                   "전용면적":True,
@@ -809,7 +812,9 @@ def map_trade(df_total, trade_option,
     # 전세
     elif(trade_option == '전세') :
       
-        df_total['건축년도'] = df_total['건축년도'].astype(int)      
+        df_total['건축년도'] = pd.to_numeric(df_total['건축년도'], errors='coerce')
+        df_total.dropna(subset=['건축년도'], inplace=True)
+        df_total['건축년도'] = df_total['건축년도'].astype('int64')   
       
         df_total_2 = df_total[df_total['월세금액'] == 0]             
         df_total_3 = df_total_2[
@@ -838,6 +843,7 @@ def map_trade(df_total, trade_option,
                                   "lon" : False,
                                   "이름" : True,
                                   "법정동": True,
+                                  '건축년도': True,
                                   "보증금액": True,
                                   "보증금액_int": False,
                                   "전용면적":True,
@@ -849,7 +855,9 @@ def map_trade(df_total, trade_option,
         
     elif(trade_option == '월세') :
       
-        df_total['건축년도'] = df_total['건축년도'].astype(int)
+        df_total['건축년도'] = pd.to_numeric(df_total['건축년도'], errors='coerce')
+        df_total.dropna(subset=['건축년도'], inplace=True)
+        df_total['건축년도'] = df_total['건축년도'].astype('int64')
       
         df_total_2 = df_total[df_total['월세금액'] != 0]             
         df_total_3 = df_total_2[
@@ -878,6 +886,7 @@ def map_trade(df_total, trade_option,
                                   "lon" : False,
                                   "이름" : True,
                                   "법정동": True,
+                                  '건축년도': True,
                                   "보증금액": True,
                                   "보증금액_int": False,
                                   "전용면적":True,
