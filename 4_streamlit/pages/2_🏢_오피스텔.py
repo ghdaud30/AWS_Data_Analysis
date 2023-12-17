@@ -216,7 +216,11 @@ if type_val == '매매':
                               year_value[0],
                               year_value[1],
                               floor_value[0],
-                              floor_value[1])
+                              floor_value[1],
+                              sig_area,
+                              type_val,
+                              year_option,
+                              month_option)
     st.plotly_chart(map_trade, use_container_width = True)
     st.markdown("---")
     
@@ -230,7 +234,11 @@ if type_val == '전세':
                               year_value[0],
                               year_value[1],
                               floor_value[0],
-                              floor_value[1])
+                              floor_value[1],
+                              sig_area,
+                              type_val,
+                              year_option,
+                              month_option)
     st.plotly_chart(map_trade, use_container_width = True)
     st.markdown("---")
     
@@ -244,7 +252,11 @@ if type_val == '월세':
                               year_value[0],
                               year_value[1],
                               floor_value[0],
-                              floor_value[1])
+                              floor_value[1],
+                              sig_area,
+                              type_val,
+                              year_option,
+                              month_option)
     st.plotly_chart(map_trade, use_container_width = True)
     st.markdown("---")
 

@@ -760,7 +760,13 @@ def map_trade(df_total, trade_option,
               amount_value_0,amount_value_1, 
               area_value_0, area_value_1, 
               year_value_0, year_value_1,
-              floor_value_0, floor_value_1):
+              floor_value_0, floor_value_1,
+              sig_area, type_val,
+              year_option, month_option):
+    
+    # 타입 별 이름
+    type_dic = {'apt':'아파트','offi':'오피스텔'}
+    type_nm = type_dic[type_val]
     
     if(trade_option == '매매'):
         
@@ -883,7 +889,7 @@ def map_trade(df_total, trade_option,
         
     fig.update_layout(
       margin={"r":0,"t":50,"l":0,"b":0},
-      title = f'{sig_area} 시군구별 {type_nm} {type_val} 거래금액 지도 ({year_option}년 {month_option}월 기준)',
+      title = f'{sig_area} 시군구별 {type_nm} {type_val} 거래 데이터 지도 ({year_option}년 {month_option}월 기준)',
       title_font_family="맑은고딕",
       title_font_size = 18,
       mapbox_style="carto-positron",
