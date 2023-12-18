@@ -120,7 +120,7 @@ def vis_trade_rent2(total, type_val, sig_area, year_val, month_val):
 # plotly 사용  
 def vis_trade_rent3(total, type_val, sig_area, year_val, month_val):
 
-    type_dic = {'apt':'아파트', 'rh':'연립다세대','sh':'단독-다가구','offi':'오피스텔'}
+    type_dic = {'apt':'아파트', 'offi':'오피스텔'}
     type_nm = type_dic[type_val]
     
     total['년'] = total['년'].astype(int)
@@ -448,17 +448,17 @@ def trade_mean_month(total, sig_area, type_val):
 
     return fig
 # 실거래가
-def trade_mean(df_trade, sig_area, type_val):
+def trade_mean(total, sig_area, type_val):
 
-    type_dic = {'apt':'아파트', 'rh':'연립다세대','sh':'단독-다가구','offi':'오피스텔'}
+    type_dic = {'apt':'아파트', 'offi':'오피스텔'}
     type_nm = type_dic[type_val]
     
-    total = df_trade
     df1 = total[(total['시도명'] == sig_area) &
                 (total['타입'] == type_val)]
                 
     df1['mean'] = df1['mean'].astype(int)
     df1['mean_2'] = df1['mean'].apply(readNumber)
+    
     
     fig = go.Figure(data=[
         go.Scatter(
@@ -568,12 +568,11 @@ def trade_count_month(total, sig_area, type_val):
 
     return fig
 # 거래량
-def trade_count(df_trade, sig_area, type_val):
+def trade_count(total, sig_area, type_val):
     
-    type_dic = {'apt':'아파트', 'rh':'연립다세대','sh':'단독-다가구','offi':'오피스텔'}
+    type_dic = {'apt':'아파트', 'offi':'오피스텔'}
     type_nm = type_dic[type_val]
 
-    total = df_trade
     df1 = total[(total['시도명'] == sig_area) & 
                 (total['타입'] == type_val)]
     fig = go.Figure(data=[
