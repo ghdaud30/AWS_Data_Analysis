@@ -146,6 +146,7 @@ apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoserv
 sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
 
 vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
+vis_trade_rent_df_2 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
 
 df_lat_lon = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/df_lat_lon.csv')
@@ -187,7 +188,7 @@ trade_mean_month = vis_func.trade_mean_month(vis_trade_rent_df,
                         sig_area,
                         type_option)
 # 실거래가
-trade_mean = vis_func.trade_mean(vis_trade_rent_df,
+trade_mean = vis_func.trade_mean(vis_trade_rent_df_2,
                         sig_area,
                         type_option)
 # 2021년 월에 따른 지역별 부동산 거래량 평균
@@ -195,7 +196,7 @@ trade_count_month = vis_func.trade_count_month(vis_trade_rent_df,
                         sig_area,
                         type_option)
 # 거래량
-trade_count = vis_func.trade_count(vis_trade_rent_df,
+trade_count = vis_func.trade_count(vis_trade_rent_df_2,
                         sig_area,
                         type_option)
 
