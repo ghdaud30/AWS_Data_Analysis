@@ -729,8 +729,8 @@ def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, year_option, mo
                                    "SIG_CD" : False,
                                    "시도명" : True,
                                    "시군구명" : True,
-                                   "구분": False,
-                                   "타입": True,
+                                   "구분": True,
+                                   "타입": False,
                                    "거래금액": True,
                                    "거래금액_int": False
                                },
