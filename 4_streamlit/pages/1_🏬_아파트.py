@@ -293,23 +293,3 @@ st.markdown("---")
 # col4.pyplot(trade_count_month, use_container_width = True) 
 # col5.plotly_chart(trade_count, use_container_width = True)
 # st.markdown("---")
-
-# trade_count1 = vis_func.trade_count(trade_count_df,
-#                           type_option,
-#                           sig_area)
-
-# trade_mean1 = vis_func.trade_mean(trade_count_df,
-#                           type_option,
-#                           sig_area)
-                          
-                          
-                          
-# trade_mean_map1 = vis_func.trade_mean_map(apart_trans4,
-#                           geo_json_seoul,
-#                           sig_lat_lon,
-#                           sig_area, 
-#                           type_option)
-
-# col1, col2 = st.columns([1,1])
-# col1.plotly_chart(trade_mean1, use_container_width = True)
-# col2.plotly_chart(trade_count1, use_container_width = True)
