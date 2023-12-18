@@ -105,7 +105,7 @@ def vis_trade_rent2(total, type_val, sig_area, year_val, month_val):
 
     # 그래프 레이아웃 및 제목 설정
     fig.update_layout(
-        title=f'{sig_area} 시군구별 아파트 매매(실거래가)/전월세(보증금) 평균값 <br><sub>단위(만원)</sup>',
+        title=f'{sig_area} 시군구별 아파트 매매(실거래가)/전월세(보증금) 평균값 ({year_val}년 {month_val}월 기준) <br><sub>단위(만원)</sup>',
         xaxis_title='',
         yaxis_title='',
         font=dict(size=14),
