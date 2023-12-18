@@ -264,25 +264,35 @@ if type_val == '월세':
     st.plotly_chart(map_trade, use_container_width = True)
     st.markdown("---")
 
-col555 = st.columns([1])
-with col555[0]:
-    st.plotly_chart(trade_mean_map, use_container_width=True)
-st.markdown("---")
-
 col, col2 = st.columns([1,1])
-col.pyplot(vis_trade_rent, use_container_width = True) 
+col.plotly_chart(trade_mean_map, use_container_width = True) 
 col2.plotly_chart(vis_trade_rent2, use_container_width = True)
 st.markdown("---")
 
-col3, col4 = st.columns([1,1])
-col3.pyplot(trade_mean_month, use_container_width = True) 
-col4.plotly_chart(trade_mean, use_container_width = True)
+col3 = st.columns([1])
+with col3[0]:
+    st.plotly_chart(trade_mean, use_container_width=True)
 st.markdown("---")
 
-col4, col5 = st.columns([1,1])
-col4.pyplot(trade_count_month, use_container_width = True) 
-col5.plotly_chart(trade_count, use_container_width = True)
+col4 = st.columns([1])
+with col4[0]:
+    st.plotly_chart(trade_count, use_container_width=True)
 st.markdown("---")
+
+# col, col2 = st.columns([1,1])
+# col.pyplot(vis_trade_rent, use_container_width = True) 
+# col2.plotly_chart(vis_trade_rent2, use_container_width = True)
+# st.markdown("---")
+
+# col3, col4 = st.columns([1,1])
+# col3.pyplot(trade_mean_month, use_container_width = True) 
+# col4.plotly_chart(trade_mean, use_container_width = True)
+# st.markdown("---")
+
+# col4, col5 = st.columns([1,1])
+# col4.pyplot(trade_count_month, use_container_width = True) 
+# col5.plotly_chart(trade_count, use_container_width = True)
+# st.markdown("---")
 
 # trade_count1 = vis_func.trade_count(trade_count_df,
 #                           type_option,
