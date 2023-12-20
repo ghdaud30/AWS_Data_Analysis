@@ -116,7 +116,7 @@ with st.container():
     st.markdown("---")
     
     st.markdown("### 🖋️ 어학 점수")
-    st.markdown("#### TOEIC 780 (2023-11-26)")
+    st.markdown("#### TOEIC 805 (2023-12-10)")
     st.markdown("---")
     
     st.markdown("### 🖍️ 자격증")
