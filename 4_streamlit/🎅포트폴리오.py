@@ -108,7 +108,7 @@ with st.container():
     
     st.markdown("### 📝 협업 툴")
     st.markdown(" - [GitHub](https://github.com/ghdaud30)")
-    st.markdown(" - [Notion](https://www.notion.so/2023-9a0cd2e5323d401cab9db29c49586519)")
+    st.markdown(" - [Notion](https://slender-month-a61.notion.site/2023-9a0cd2e5323d401cab9db29c49586519)")
     st.markdown("---")
     
     st.markdown("### 🖊️ 알고리즘")
