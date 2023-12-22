@@ -126,7 +126,7 @@ with st.container():
     st.markdown(" - 운전면허자격증 2종 보통")
     st.markdown("---")
     
-    st.markdown("### 연락문의")
+    st.markdown("### 🚀 연락문의")
     st.markdown(" - 이메일 : ghdaud3093@gmail.com")
     st.markdown("---")
     
