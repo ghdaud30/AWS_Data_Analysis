@@ -79,13 +79,13 @@ type_val = st.sidebar.selectbox(
     type_list
 )
 
-year_list = [2021,2022]
+year_list = [2021,2022,2023]
 year_option = st.sidebar.selectbox(
  '년도',
  year_list
 )
 
-year_list_str = ['2021','2022']
+year_list_str = ['2021','2022','2023']
 selected_year_index = year_list.index(year_option)  # 선택한 연도의 인덱스를 가져옵니다
 selected_year_str = year_list_str[selected_year_index]  # year_list_str에서 해당 연도의 문자열 값을 가져옵니다
 
