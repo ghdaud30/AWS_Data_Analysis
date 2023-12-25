@@ -1,2 +1,4 @@
 *.csv
 data_upload_s3.ipynb
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
