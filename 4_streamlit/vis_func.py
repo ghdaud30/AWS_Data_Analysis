@@ -998,7 +998,7 @@ def map_trade(df_total, trade_option,
       coloraxis_showscale=False,
       showlegend=False,
       hoverlabel=dict(
-        bgcolor='white',
+        bgcolor='black',
         font_size=15,
         ),
         template='plotly_white'
