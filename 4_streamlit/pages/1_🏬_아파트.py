@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import time
 import geopandas as gpd
 import glob
 import plotly.express as px
@@ -139,26 +140,36 @@ st.sidebar.markdown(
 """
 )
 
-legal_info_b = read_file_csv('real-estate555-bucket/0_data/streamlit_data/legal_info_b.csv')
+# Add a placeholder 진행 상황 바
+latest_iteration = st.empty()
+bar = st.progress(0)
 
-apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
-sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
+for i in range(100):
+    # Update the progress bar with each iteration.
+    latest_iteration.text(f'Loadidng is Processing {i+1}')
+    legal_info_b = read_file_csv('real-estate555-bucket/0_data/streamlit_data/legal_info_b.csv')
 
-vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
-vis_trade_rent_df_2 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent2.csv')
+    apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
+    sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
+
+    vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
+    vis_trade_rent_df_2 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent2.csv')
+
+    df_lat_lon = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/df_lat_lon.csv')    
+    bar.progress(i + 1)
+    time.sleep(0.01)
+
+
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
-
-df_lat_lon = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/df_lat_lon.csv')
-
 df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_trade/{type_option}_trade_{selected_year_str}{selected_month_str}.csv')
 df_rent = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_rent/{type_option}_rent_{selected_year_str}{selected_month_str}.csv')
+
 df_trade_2 = df_trade[df_trade['시도명'] == sig_area]
 df_rent_2 = df_rent[df_rent['시도명'] == sig_area]
-
 df_trade_3 = pd.merge(df_trade_2,legal_info_b,
+                      
                         on = ['법정동코드','시도명','시군구명','동리명'],
                         how = 'left')
-
 df_trade_4 = pd.merge(df_trade_3,df_lat_lon,
                           on = '주소',
                           how = 'left')
