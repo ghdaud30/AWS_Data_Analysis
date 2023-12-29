@@ -177,7 +177,7 @@ def vis_trade_rent3(total, type_val, sig_area, year_val, month_val):
         title_font_family="맑은고딕",
         title_font_size = 18,
         hoverlabel=dict(
-            bgcolor='white',
+            bgcolor='black',
             font_size=15,
         ),
         hovermode="x unified",
@@ -323,7 +323,7 @@ def school_count_plotly_type(df_trade, sig_area,school_name):
             title_font_family="맑은고딕",
             title_font_size = 18,
             hoverlabel=dict(
-                bgcolor='white',
+                bgcolor='black',
                 font_size=15,
             ),
             hovermode="x unified",
@@ -379,7 +379,7 @@ def school_count_plotly_gender(df_trade, sig_area,school_name):
             title_font_family="맑은고딕",
             title_font_size = 18,
             hoverlabel=dict(
-                bgcolor='white',
+                bgcolor='black',
                 font_size=15,
             ),
             hovermode="x unified",
@@ -499,7 +499,7 @@ def trade_mean(total, sig_area, type_val):
       title_font_family="맑은고딕",
       title_font_size = 18,
       hoverlabel=dict(
-        bgcolor='white',
+        bgcolor='black',
         font_size=15,
       ),
       hovermode="x unified",
@@ -610,7 +610,7 @@ def trade_count(total, sig_area, type_val):
       title_font_family="맑은고딕",
       title_font_size = 18,
       hoverlabel=dict(
-        bgcolor='white',
+        bgcolor='black',
         font_size=15,
       ),
       hovermode="x unified",
@@ -656,7 +656,7 @@ def park_count(park_raw, sig_area):
         title_font_size = 18,
         
         hoverlabel=dict(
-            bgcolor='white',
+            bgcolor='black',
             font_size=15,
         ),
         
@@ -695,7 +695,7 @@ def park_geo(park_raw, sig_area):
       mapbox_style="carto-positron",
       margin={"r":0,"t":50,"l":0,"b":0},
       hoverlabel=dict(
-        bgcolor='white',
+        bgcolor='black',
         font_size=15,
         ),
         template='plotly_white'
@@ -747,7 +747,7 @@ def trade_mean_map(apart_trans, geo_json ,sig_lat_lon, sig_area, year_option, mo
       title_font_family="맑은고딕",
       title_font_size = 18,
       hoverlabel=dict(
-        bgcolor='white',
+        bgcolor='black',
         font_size=15,
         ),
         template='plotly_white'
