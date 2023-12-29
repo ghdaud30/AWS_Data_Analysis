@@ -136,14 +136,7 @@ st.sidebar.markdown(
     - [지리 정보 수집(지오서비스)](http://www.gisdeveloper.co.kr/?p=2332)
 """
 )
-
-apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
-sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
-
-vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
-vis_trade_rent_df_2 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent2.csv')
 geo_json = read_file_json(f'real-estate555-bucket/0_data/streamlit_data/geoservice/geo_sig_{sig_area}_json.geojson')
-
 df_lat_lon = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/df_lat_lon.csv')
 
 df_trade = read_file_csv(f'real-estate555-bucket/0_data/streamlit_data/{type_option}_trade/{type_option}_trade_{selected_year_str}{selected_month_str}.csv')
@@ -158,47 +151,6 @@ df_trade_4 = pd.merge(df_trade_2,df_lat_lon,
 df_rent_3 = pd.merge(df_rent_2,df_lat_lon,
                       on = '주소',
                       how = 'left')
-
-
-# 막대그래프 seaborn
-vis_trade_rent = vis_func.vis_trade_rent(vis_trade_rent_df,
-                          type_option,
-                          sig_area,
-                          year_option,
-                          month_option)
-# plotly
-vis_trade_rent2 = vis_func.vis_trade_rent2(vis_trade_rent_df,
-                          type_option,
-                          sig_area,
-                          year_option,
-                          month_option)
-
-# 2021년 월에 따른 지역별 부동산 실거래가 평균
-trade_mean_month = vis_func.trade_mean_month(vis_trade_rent_df,
-                          sig_area,
-                          type_option)
-# 실거래가
-trade_mean = vis_func.trade_mean(vis_trade_rent_df_2,
-                          sig_area,
-                          type_option)
-# 2021년 월에 따른 지역별 부동산 거래량 평균
-trade_count_month = vis_func.trade_count_month(vis_trade_rent_df,
-                          sig_area,
-                          type_option)
-# 거래량
-trade_count = vis_func.trade_count(vis_trade_rent_df_2,
-                          sig_area,
-                          type_option)
-
-# 각 시군구별 평균 거래 금액 지도로 표현
-trade_mean_map = vis_func.trade_mean_map(apart_trans,
-                        geo_json,
-                        sig_lat_lon,
-                        sig_area,
-                        year_option,
-                        month_option,
-                        type_val,
-                        type_option)
 
 # 각 시도별 거래량 지도로 표현
 if type_val == '매매':
@@ -254,6 +206,53 @@ if type_val == '월세':
                               month_option)
     st.plotly_chart(map_trade, use_container_width = True)
     st.markdown("---")
+
+apart_trans = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/property_trade_map.csv')
+sig_lat_lon = read_file_csv('real-estate555-bucket/0_data/streamlit_data/geoservice/sig_lat_lon.csv')
+
+vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent.csv')
+vis_trade_rent_df_2 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent2.csv')
+
+
+# 막대그래프 seaborn
+vis_trade_rent = vis_func.vis_trade_rent(vis_trade_rent_df,
+                          type_option,
+                          sig_area,
+                          year_option,
+                          month_option)
+# plotly
+vis_trade_rent2 = vis_func.vis_trade_rent2(vis_trade_rent_df,
+                          type_option,
+                          sig_area,
+                          year_option,
+                          month_option)
+
+# 2021년 월에 따른 지역별 부동산 실거래가 평균
+trade_mean_month = vis_func.trade_mean_month(vis_trade_rent_df,
+                          sig_area,
+                          type_option)
+# 실거래가
+trade_mean = vis_func.trade_mean(vis_trade_rent_df_2,
+                          sig_area,
+                          type_option)
+# 2021년 월에 따른 지역별 부동산 거래량 평균
+trade_count_month = vis_func.trade_count_month(vis_trade_rent_df,
+                          sig_area,
+                          type_option)
+# 거래량
+trade_count = vis_func.trade_count(vis_trade_rent_df_2,
+                          sig_area,
+                          type_option)
+
+# 각 시군구별 평균 거래 금액 지도로 표현
+trade_mean_map = vis_func.trade_mean_map(apart_trans,
+                        geo_json,
+                        sig_lat_lon,
+                        sig_area,
+                        year_option,
+                        month_option,
+                        type_val,
+                        type_option)
 
 col, col2 = st.columns([1,1])
 col.plotly_chart(trade_mean_map, use_container_width = True) 
