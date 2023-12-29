@@ -214,35 +214,19 @@ vis_trade_rent_df = read_file_csv('real-estate555-bucket/0_data/streamlit_data/v
 vis_trade_rent_df_2 = read_file_csv('real-estate555-bucket/0_data/streamlit_data/vis_trade_rent2.csv')
 
 
-# 막대그래프 seaborn
-vis_trade_rent = vis_func.vis_trade_rent(vis_trade_rent_df,
-                          type_option,
-                          sig_area,
-                          year_option,
-                          month_option)
+# # 막대그래프 seaborn
+# vis_trade_rent = vis_func.vis_trade_rent(vis_trade_rent_df,
+#                           type_option,
+#                           sig_area,
+#                           year_option,
+#                           month_option)
+
 # plotly
 vis_trade_rent2 = vis_func.vis_trade_rent2(vis_trade_rent_df,
                           type_option,
                           sig_area,
                           year_option,
                           month_option)
-
-# 2021년 월에 따른 지역별 부동산 실거래가 평균
-trade_mean_month = vis_func.trade_mean_month(vis_trade_rent_df,
-                          sig_area,
-                          type_option)
-# 실거래가
-trade_mean = vis_func.trade_mean(vis_trade_rent_df_2,
-                          sig_area,
-                          type_option)
-# 2021년 월에 따른 지역별 부동산 거래량 평균
-trade_count_month = vis_func.trade_count_month(vis_trade_rent_df,
-                          sig_area,
-                          type_option)
-# 거래량
-trade_count = vis_func.trade_count(vis_trade_rent_df_2,
-                          sig_area,
-                          type_option)
 
 # 각 시군구별 평균 거래 금액 지도로 표현
 trade_mean_map = vis_func.trade_mean_map(apart_trans,
@@ -259,10 +243,30 @@ col.plotly_chart(trade_mean_map, use_container_width = True)
 col2.plotly_chart(vis_trade_rent2, use_container_width = True)
 st.markdown("---")
 
+# # 2021년 월에 따른 지역별 부동산 실거래가 평균
+# trade_mean_month = vis_func.trade_mean_month(vis_trade_rent_df,
+#                           sig_area,
+#                           type_option)
+
+# 실거래가
+trade_mean = vis_func.trade_mean(vis_trade_rent_df_2,
+                          sig_area,
+                          type_option)
+
 col3 = st.columns([1])
 with col3[0]:
     st.plotly_chart(trade_mean, use_container_width=True)
 st.markdown("---")
+
+# # 2021년 월에 따른 지역별 부동산 거래량 평균
+# trade_count_month = vis_func.trade_count_month(vis_trade_rent_df,
+#                           sig_area,
+#                           type_option)
+
+# 거래량
+trade_count = vis_func.trade_count(vis_trade_rent_df_2,
+                          sig_area,
+                          type_option)
 
 col4 = st.columns([1])
 with col4[0]:

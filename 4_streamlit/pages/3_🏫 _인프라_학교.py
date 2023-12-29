@@ -85,59 +85,37 @@ st.sidebar.markdown(
 )
 
 elementary_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/elementary_school.csv')
-middle_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/middle_school.csv')
-high_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/high_school.csv')
-
 elementary_school['시도명'] = elementary_school['도로명주소'].str.split(' ').str[0]
 elementary_school['시군구명'] = elementary_school['도로명주소'].str.split(' ').str[1]
-middle_school['시도명'] = middle_school['도로명주소'].str.split(' ').str[0]
-middle_school['시군구명'] = middle_school['도로명주소'].str.split(' ').str[1]
-high_school['시도명'] = high_school['도로명주소'].str.split(' ').str[0]
-high_school['시군구명'] = high_school['도로명주소'].str.split(' ').str[1]
-
-# combined_schools = pd.concat([elementary_school, middle_school, high_school], ignore_index=True)
 
 school_vis = vis_func.school_count_plotly_type(elementary_school, sig_area,'초등학교')
 school_vis2 = vis_func.school_count_plotly_gender(elementary_school, sig_area,'초등학교')
-
-school_vis3 = vis_func.school_count_plotly_type(middle_school, sig_area,'중학교')
-school_vis4 = vis_func.school_count_plotly_gender(middle_school, sig_area,'중학교')
-
-school_vis5 = vis_func.school_count_plotly_type(high_school, sig_area,'고등학교')
-school_vis6 = vis_func.school_count_plotly_gender(high_school, sig_area,'고등학교')
 
 col, col2 = st.columns([1,1])
 col.plotly_chart(school_vis, use_container_width = True) 
 col2.plotly_chart(school_vis2, use_container_width = True)
 st.markdown("---")
 
+middle_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/middle_school.csv')
+middle_school['시도명'] = middle_school['도로명주소'].str.split(' ').str[0]
+middle_school['시군구명'] = middle_school['도로명주소'].str.split(' ').str[1]
+
+school_vis3 = vis_func.school_count_plotly_type(middle_school, sig_area,'중학교')
+school_vis4 = vis_func.school_count_plotly_gender(middle_school, sig_area,'중학교')
+
 col3, col4 = st.columns([1,1])
 col3.plotly_chart(school_vis3, use_container_width = True) 
 col4.plotly_chart(school_vis4, use_container_width = True)
 st.markdown("---")
 
+high_school = read_file_csv('real-estate555-bucket/0_data/streamlit_data/high_school.csv')
+high_school['시도명'] = high_school['도로명주소'].str.split(' ').str[0]
+high_school['시군구명'] = high_school['도로명주소'].str.split(' ').str[1]
+
+school_vis5 = vis_func.school_count_plotly_type(high_school, sig_area,'고등학교')
+school_vis6 = vis_func.school_count_plotly_gender(high_school, sig_area,'고등학교')
+
 col5, col6 = st.columns([1,1])
 col5.plotly_chart(school_vis5, use_container_width = True) 
 col6.plotly_chart(school_vis6, use_container_width = True)
 st.markdown("---")
-
-# school_vis = vis_func.school_count_plotly_type(elementary_school, sig_area,'초등학교')
-# school_vis2 = vis_func.school_count_plotly_type(middle_school, sig_area,'중학교')
-# school_vis3 = vis_func.school_count_plotly_type(high_school, sig_area,'고등학교')
-
-# school_vis4 = vis_func.school_count_plotly_gender(elementary_school, sig_area,'초등학교')
-# school_vis5 = vis_func.school_count_plotly_gender(middle_school, sig_area,'중학교')
-# school_vis6 = vis_func.school_count_plotly_gender(high_school, sig_area,'고등학교')
-
-# col, col2, col3 = st.columns([1,1,1])
-# col.plotly_chart(school_vis, use_container_width = True) 
-# col2.plotly_chart(school_vis2, use_container_width = True)
-# col3.plotly_chart(school_vis3, use_container_width = True)
-
-# col4, col5, col6 = st.columns([1,1,1])
-# col4.plotly_chart(school_vis4, use_container_width = True) 
-# col5.plotly_chart(school_vis5, use_container_width = True)
-# col6.plotly_chart(school_vis6, use_container_width = True)
-
-
-
